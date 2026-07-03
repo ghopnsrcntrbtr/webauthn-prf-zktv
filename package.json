@@ -1,0 +1,74 @@
+{
+  "name": "webauthn-prf-zktv",
+  "version": "0.1.0",
+  "description": "Zero-Knowledge TrustVault: WebAuthn PRF-backed vault key wrapping (HKDF-SHA256 → AES-256-GCM) with optional PWA IndexedDB storage patterns.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Ian Pinto",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/opnsrcntrbtr/webauthn-prf-zktv.git"
+  },
+  "keywords": [
+    "webauthn",
+    "prf",
+    "hmac-secret",
+    "passkey",
+    "zero-knowledge",
+    "vault",
+    "aes-gcm",
+    "hkdf",
+    "indexeddb",
+    "pwa",
+    "e2ee"
+  ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "SECURITY.md",
+    "MIGRATION.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./webauthn": {
+      "types": "./dist/webauthn/index.d.ts",
+      "import": "./dist/webauthn/index.js"
+    },
+    "./indexeddb": {
+      "types": "./dist/indexeddb/index.d.ts",
+      "import": "./dist/indexeddb/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "verify": "npm run type-check && npm run lint && npm run test && npm run build",
+    "prepublishOnly": "npm run verify"
+  },
+  "dependencies": {
+    "@noble/hashes": "^1.5.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.1.0",
+    "eslint": "^10.6.0",
+    "fake-indexeddb": "^6.2.5",
+    "prettier": "^3.9.4",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.62.1",
+    "vitest": "^4.1.9"
+  }
+}
