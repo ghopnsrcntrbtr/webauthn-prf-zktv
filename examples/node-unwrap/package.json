@@ -1,0 +1,7 @@
+{
+  "name": "zktv-example-node-unwrap",
+  "private": true,
+  "type": "module",
+  "dependencies": { "webauthn-prf-zktv": "file:../.." },
+  "scripts": { "start": "node index.mjs" }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "zktv-example-pwa",
+  "private": true,
+  "type": "module",
+  "dependencies": { "webauthn-prf-zktv": "file:../.." },
+  "devDependencies": { "vite": "^6.0.0", "typescript": "^5.9.0" },
+  "scripts": { "dev": "vite", "build": "vite build" }
+}
