@@ -19,5 +19,7 @@ export {
   ZktvError,
 } from './errors';
 export type { ZktvErrorCode } from './errors';
+export { fromTrustVaultRecord, TRUSTVAULT_HKDF_INFO } from './core/trustvault';
+export type { FromTrustVaultOptions } from './core/trustvault';
 export { generateSalt } from './utils/random';
 export { zeroize } from './utils/zeroize';
