@@ -32,6 +32,12 @@
   frame=single
 }
 
+% Inline note marking places where the paper text and the reference
+% implementation (webauthn-prf-zktv) diverge. Resolve before submission.
+\newcommand{\discrepancy}[1]{%
+  \par\noindent\fcolorbox{red!60!black}{red!5}{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+    \small\textbf{Discrepancy:} #1}}\par}
+
 \begin{document}
 
 \title{WebAuthn PRF-Based Vault Key Wrapping and Zero-Knowledge PWA Storage Architecture}
@@ -95,43 +101,61 @@ Explain the security goals (zero-knowledge storage, bounded exposure in browser 
 
 \section{PRF-Based Vault Key Wrapping}
 \subsection{High-Level Design}
-Describe the enrollment and unlock flows where PRF output is used to derive a wrap key that encrypts the vault key.
-Clarify that \emph{only} wrapped vault keys, salts, and scheme identifiers are persisted; PRF seeds and wrap keys are never stored.
+Enrollment (\texttt{enrollVault}) and unlock (\texttt{unlockVault}) use the 32-byte WebAuthn PRF output as HKDF input keying material to derive a non-extractable AES-256-GCM \emph{wrap key} $K_w$, which encrypts the 256-bit vault key $K_v$.
+The only persisted artifact is a \texttt{WrappedSecretRecord}:
+\[
+  R = (\mathrm{scheme}, \mathrm{ciphertext}, \mathrm{nonce}, \mathrm{salt}[, \mathrm{kdfParams}])
+\]
+where $\mathrm{scheme} \in \{\text{\texttt{prf-v1}}, \text{\texttt{pw-v1}}\}$, the nonce is a fresh 96-bit random AES-GCM IV, and the salt is the PRF salt (\texttt{prf-v1}) or the scrypt salt (\texttt{pw-v1}).
+\texttt{kdfParams} is present iff $\mathrm{scheme}=\text{\texttt{pw-v1}}$; the parser (\texttt{parseRecord}) rejects \texttt{prf-v1} records carrying it.
+PRF outputs and wrap keys are never stored: wrap keys are created with \texttt{extractable:\,false} in Web Crypto, and transient PRF-output buffers are zeroized (\texttt{.fill(0)}) in \texttt{finally} blocks.
+
+HKDF uses SHA-256 with an \emph{empty} salt (valid per RFC~5869, treated as zeros); per-credential domain separation comes from the unique PRF salt, which yields unique input keying material.
+The HKDF \texttt{info} label is the frozen constant \texttt{"webauthn-prf-zktv vault key wrap v1"}; a legacy label \texttt{"TrustVault Vault Key Wrapping v1"} exists only in the one-shot TrustVault migration adapter (\texttt{fromTrustVaultRecord}), which unwraps under the legacy label and re-wraps under v1 using the same PRF output, requiring no extra ceremony.
+
+A password fallback scheme \texttt{pw-v1} covers clients where PRF is not viable (notably Android WebView, where PRF does not reach the Credential Manager): the wrap key is derived with memory-hard scrypt ($N{=}131072$, $r{=}8$, $p{=}1$ as a security floor) instead of HKDF-from-PRF; all other steps are identical.
 
 \subsection{Pseudo-Code}
-The following algorithm expresses the core vault key wrapping procedure using WebAuthn PRF:
+Algorithm~\ref{alg:wrap} reflects \texttt{wrapSecret} in \texttt{src/core/wrap.ts} composed with the PRF ceremony (\texttt{enrollVault} in \texttt{src/webauthn/vault.ts}):
 
 \begin{algorithm}[h]
-  \caption{Vault Key Wrapping with WebAuthn PRF}
+  \caption{Vault key wrapping (\texttt{enrollVault} $\to$ \texttt{wrapSecret}, scheme \texttt{prf-v1})}
+  \label{alg:wrap}
   \begin{algorithmic}[1]
-    \Require WebAuthn credential $C$, PRF salt $s$, random vault key $K_v$
+    \Require WebAuthn credential $C$ with PRF enabled, PRF salt $s$ (32 random bytes), vault key $K_v$ (32 bytes)
     \Ensure Stored record $R$ that does not reveal $K_v$ without $C$
-    \State $prfSeed \gets \mathrm{EvaluatePRF}(C, s)$
-    \State $K_w \gets \mathrm{HKDF\_SHA256}(prfSeed, \text{info}=\text{``vault-wrap''})$
-    \State $(\mathrm{nonce}, \mathrm{cipher}) \gets \mathrm{AES\_256\_GCM\_Encrypt}(K_w, K_v)$
-    \State Zeroize $prfSeed$ and any raw representation of $K_v$
-    \State $R \gets ( \mathrm{cipher}, \mathrm{nonce}, s, \mathrm{scheme}=\text{``prf-v1''} )$
+    \State $prf \gets \mathrm{EvaluatePRF}(C, s)$ \Comment{32 bytes; \texttt{PrfResultMissingError} if absent or wrong length}
+    \State $K_w \gets \mathrm{HKDF\text{-}SHA256}(\mathrm{ikm}{=}prf,\ \mathrm{salt}{=}\varepsilon,\ \mathrm{info}{=}\text{``webauthn-prf-zktv vault key wrap v1''})$
+    \State import $K_w$ as non-extractable AES-256-GCM \texttt{CryptoKey}
+    \State $\mathrm{nonce} \gets \mathrm{Random}(12)$
+    \State $\mathrm{ciphertext} \gets \mathrm{AES\text{-}256\text{-}GCM\text{-}Encrypt}(K_w, \mathrm{nonce}, K_v)$ \Comment{auth tag included}
+    \State zeroize $prf$ \Comment{\texttt{finally} block; $K_w$ is non-extractable, never in JS memory}
+    \State $R \gets (\mathrm{scheme}{=}\text{\texttt{prf-v1}},\ \mathrm{ciphertext},\ \mathrm{nonce},\ \mathrm{salt}{=}s)$
     \State \Return $R$
   \end{algorithmic}
 \end{algorithm}
 
-Similarly, define an algorithm for unwrapping:
+\discrepancy{An earlier draft stated that wrapping zeroizes ``any raw representation of $K_v$''. In the implementation, \texttt{wrapSecret} deliberately does \emph{not} zeroize the caller's secret buffer --- the caller owns $K_v$ (it may still be needed, e.g.\ to also wrap under \texttt{pw-v1}). Zeroization inside the library is scoped to PRF outputs and to the transient plaintext produced during unwrap.}
+
+Algorithm~\ref{alg:unwrap} reflects \texttt{unlockVault} $\to$ \texttt{unwrapSecret}; note the replay verification step absent from generic treatments:
 
 \begin{algorithm}[h]
-  \caption{Vault Key Unwrapping with WebAuthn PRF}
+  \caption{Vault key unwrapping (\texttt{unlockVault} $\to$ \texttt{unwrapSecret})}
+  \label{alg:unwrap}
   \begin{algorithmic}[1]
-    \Require WebAuthn credential $C$, stored record $R=(\mathrm{cipher}, \mathrm{nonce}, s,\mathrm{scheme})$
-    \Ensure Non-extractable vault key $K_v$
-    \State $prfSeed \gets \mathrm{EvaluatePRF}(C, s)$
-    \State $K_w \gets \mathrm{HKDF\_SHA256}(prfSeed, \text{info}=\text{``vault-wrap''})$
-    \State $K_v \gets \mathrm{AES\_256\_GCM\_Decrypt}(K_w, \mathrm{nonce}, \mathrm{cipher})$
-    \State Import $K_v$ into Web Crypto as a non-extractable \texttt{CryptoKey}
-    \State Zeroize $prfSeed$ and any raw buffer holding $K_v$
-    \State \Return $K_v$
+    \Require Credential id, stored record $R=(\text{\texttt{prf-v1}}, \mathrm{ciphertext}, \mathrm{nonce}, s)$, last stored signature counter $c$
+    \Ensure Non-extractable session \texttt{CryptoKey} $K_v$, new counter $c'$
+    \State $(prf, c') \gets \mathrm{EvaluatePRF}(C, s)$ \Comment{assertion ceremony with fresh 32-byte challenge}
+    \State verify clientData: $\mathrm{type}{=}\text{\texttt{webauthn.get}}$, challenge and origin match; verify $c' > c$ (unless $c'{=}0$); else throw \texttt{ReplayError}
+    \State $K_w \gets \mathrm{HKDF\text{-}SHA256}(\mathrm{ikm}{=}prf,\ \mathrm{salt}{=}\varepsilon,\ \mathrm{info}{=}\text{``webauthn-prf-zktv vault key wrap v1''})$
+    \State $b \gets \mathrm{AES\text{-}256\text{-}GCM\text{-}Decrypt}(K_w, \mathrm{nonce}, \mathrm{ciphertext})$; on any failure throw generic \texttt{DecryptError} \Comment{never distinguishes wrong key from corrupt data}
+    \State reject unless $|b| = 32$; import $b$ as non-extractable AES-256-GCM \texttt{CryptoKey} $K_v$
+    \State zeroize $b$ and $prf$ \Comment{both in \texttt{finally} blocks}
+    \State \Return $(K_v, c')$ \Comment{caller persists $c'$ for the next unlock}
   \end{algorithmic}
 \end{algorithm}
 
-Replace these generic steps with implementation details from your \texttt{webauthn-prf-zktv} repository (function names, error handling, and type signatures).
+Failure paths are typed: wrong key or tampered ciphertext $\to$ \texttt{DecryptError} (intentionally generic, no cause propagation); malformed or scheme-mismatched records $\to$ \texttt{RecordFormatError}; challenge/origin/counter anomalies $\to$ \texttt{ReplayError}.
 
 \subsection{Zero-Knowledge Argument}
 Formally analyze why stored data $R$ and encrypted vault contents are insufficient to recover secrets without the authenticator.
@@ -139,13 +163,15 @@ Discuss assumptions on PRF, HKDF, and AES-256-GCM.
 
 \section{IndexedDB Storage Architecture}
 \subsection{Schema Overview}
-Describe the IndexedDB object stores:
+The library's \texttt{ZktvDb} (raw IndexedDB, no Dexie dependency; database name \texttt{zktv}, version 1) creates three object stores:
 \begin{itemize}
-  \item \texttt{vaults}: wrapped vault keys, salts, scheme identifiers, minimal metadata.
-  \item \texttt{credentials}: ciphertexts for passwords and encrypted metadata.
-  \item \texttt{hibpPrefixes}: breach-detection prefixes treated as residuals.
-  \item \texttt{sessions}: ephemeral session metadata.
+  \item \texttt{vaults}: composite primary key \texttt{[vaultId, scheme]}. Each row holds \texttt{vaultId}, \texttt{scheme}, the JSON-serialized \texttt{WrappedSecretRecord} (version-tagged \texttt{v:1}, binary fields base64url-encoded), and \texttt{updatedAt}. The composite key lets one vault carry a \texttt{prf-v1} record and a \texttt{pw-v1} fallback record side by side; \texttt{loadWrappedVault} tries \texttt{prf-v1} first.
+  \item \texttt{credentials}: primary key \texttt{credentialId} (base64url), secondary index on \texttt{vaultId}. Rows store only non-secret metadata: \texttt{vaultId}, the last verified signature \texttt{counter}, the base64url PRF salt, authenticator \texttt{transports}, and \texttt{createdAt}.
+  \item \texttt{meta}: key--value store (\texttt{keyPath: key}) reserved for application metadata and future migrations.
 \end{itemize}
+Every stored row round-trips through \texttt{serializeRecord}/\texttt{parseRecord}, so structural invariants (12-byte nonce, $\geq$16-byte salt, ciphertext longer than the 16-byte GCM tag, \texttt{kdfParams} present iff \texttt{pw-v1}) are re-validated on every load and violations surface as \texttt{RecordFormatError}.
+
+\discrepancy{An earlier draft additionally listed \texttt{hibpPrefixes} (breach-detection prefixes) and \texttt{sessions} stores. Those belong to the TrustVault-PWA application schema, not to \texttt{webauthn-prf-zktv}, whose storage module ships exactly the three stores above (\texttt{vaults}, \texttt{credentials}, \texttt{meta}). If the paper discusses the TrustVault deployment, attribute those stores to the application layer explicitly.}
 
 \subsection{Schema Diagram}
 Include a figure depicting the IndexedDB schema and relationships:
@@ -154,26 +180,63 @@ Include a figure depicting the IndexedDB schema and relationships:
   \centering
   % Replace the placeholder box below with a TikZ diagram or an imported PDF/PNG.
   \fbox{\parbox{0.8\linewidth}{
-    Diagram placeholder: IndexedDB stores (\texttt{vaults}, \texttt{credentials}, \texttt{hibpPrefixes}, \texttt{sessions}) and their key fields.
-    Derive this from your actual Dexie schema in the \texttt{TrustVault-PWA} and \texttt{webauthn-prf-zktv} repos.
+    Diagram placeholder: IndexedDB database \texttt{zktv} v1 with stores
+    \texttt{vaults} (PK \texttt{[vaultId, scheme]} $\to$ serialized \texttt{WrappedSecretRecord}, \texttt{updatedAt}),
+    \texttt{credentials} (PK \texttt{credentialId}, index \texttt{vaultId} $\to$ \texttt{counter}, \texttt{prfSalt}, \texttt{transports}, \texttt{createdAt}), and
+    \texttt{meta} (PK \texttt{key}). Arrow: \texttt{credentials.vaultId} $\to$ \texttt{vaults.vaultId} (1 vault : N credentials).
   }}
   \caption{IndexedDB schema for vault and credential storage.}
   \label{fig:indexeddb-schema}
 \end{figure}
 
 \subsection{Migrations and Security Properties}
-Explain how database versioning and migrations remove legacy device-key schemes and introduce new stores while preserving zero-knowledge properties.
-Summarize key hygiene practices (non-extractable keys, zeroization of buffers, residual tracking).
+\texttt{openVaultDb} accepts an \texttt{onUpgrade(db, oldVersion, tx)} hook that runs inside \texttt{onupgradeneeded} \emph{after} the built-in stores are ensured, letting applications version their own stores without touching the core schema. The migration invariant is that no upgrade may introduce stored recomputable key inputs: only \texttt{WrappedSecretRecord} shapes and non-secret credential metadata are ever persisted.
+Lifecycle operations preserve this: \texttt{clearVault} deletes both scheme rows for a vault and every credential row bound to it via the \texttt{vaultId} index, and \texttt{securityWipe} clears all three stores (mirroring TrustVault's security-wipe semantics).
+Key hygiene throughout: all derived and imported keys are non-extractable \texttt{CryptoKey}s, transient buffers are zeroized in \texttt{finally} blocks, and the signature counter persisted in \texttt{credentials} is updated after each verified assertion (\texttt{updateCounter}) to feed the replay check of Algorithm~\ref{alg:unwrap}.
 
 \section{Implementation in \texttt{webauthn-prf-zktv}}
-Provide an overview of the library’s modules:
+The library is TypeScript (strict), ESM-only, with \texttt{@noble/hashes} (scrypt) as its sole runtime dependency; all other cryptography uses the Web Crypto API. It ships three sub-path entry points:
 \begin{itemize}
-  \item WebAuthn PRF helpers (registration/authentication options, capability detection).
-  \item Core crypto module (HKDF + AES-256-GCM wrapping).
-  \item Optional IndexedDB helpers and migrations for PWAs.
+  \item \texttt{webauthn-prf-zktv} (core; Node $\geq$20 and browsers): \texttt{wrapSecret}/\texttt{unwrapSecret}/\texttt{unwrapSecretBytes}, HKDF and scrypt derivation (\texttt{src/core/derive.ts}), record (de)serialization with structural validation (\texttt{src/core/serialize.ts}), the TrustVault migration adapter, and the typed error hierarchy (\texttt{ZktvError} with codes \texttt{PRF\_UNSUPPORTED}, \texttt{CEREMONY\_CANCELLED}, \texttt{PRF\_RESULT\_MISSING}, \texttt{REPLAY}, \texttt{DECRYPT\_FAILED}, \texttt{RECORD\_FORMAT}, \texttt{STORAGE}).
+  \item \texttt{webauthn-prf-zktv/webauthn} (browsers only): capability detection and ceremonies. \texttt{detectPrfSupport} is tri-state (\texttt{supported}/\texttt{unsupported}/\texttt{unknown}) via \texttt{PublicKeyCredential.getClientCapabilities()} and never creates throwaway credentials to probe; \texttt{isPrfViableOnThisClient} additionally rejects Android WebView (where PRF does not reach the Credential Manager) and checks for a user-verifying platform authenticator. \texttt{enrollPrfCredential} is \emph{adaptive}: it requests \texttt{prf.eval} at creation time, so clients that evaluate PRF during registration (e.g.\ Chrome 147+ with Windows Hello) enroll in a single ceremony; otherwise it hard-verifies \texttt{prf.enabled} in the extension outputs (aborting with \texttt{PrfUnsupportedError} if false) and runs one assertion ceremony to obtain the PRF output. \texttt{evaluatePrf} enforces a 32-byte PRF result and performs the client-side replay verification of Algorithm~\ref{alg:unwrap}. \texttt{enrollVault}/\texttt{unlockVault} compose ceremony, HKDF, and (un)wrapping into single calls that zeroize the PRF output in \texttt{finally}.
+  \item \texttt{webauthn-prf-zktv/indexeddb} (browsers only): the \texttt{ZktvDb} storage layer (Fig.~\ref{fig:indexeddb-schema}).
 \end{itemize}
 
-Use \texttt{lstlisting} environments to show representative TypeScript/JavaScript code from the GitHub repo (e.g., the function that wraps the vault key and the Dexie schema definition), being careful not to include proprietary or non-public content.
+The core wrap entry point, verbatim from \texttt{src/core/wrap.ts}:
+
+\begin{lstlisting}[language=Java,caption={\texttt{wrapSecret}: the three wrap paths (PRF, password, caller-supplied wrap key).}]
+export async function wrapSecret(options: WrapOptions): Promise<WrappedSecretRecord> {
+  if ('prfOutput' in options) {
+    const wrapKey = await deriveWrapKeyFromPrf(options.prfOutput);
+    return encryptRecord(wrapKey, 'prf-v1', options.prfSalt, options.secret);
+  }
+  if ('password' in options) {
+    const salt = options.salt ?? generateSalt();
+    const kdfParams = options.kdfParams ?? DEFAULT_SCRYPT_PARAMS;
+    const wrapKey = await deriveWrapKeyFromPassword(options.password, salt, kdfParams);
+    const record = await encryptRecord(wrapKey, 'pw-v1', salt, options.secret);
+    return { ...record, kdfParams };
+  }
+  return encryptRecord(options.wrapKey, options.scheme, options.salt, options.secret);
+}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Java,caption={HKDF derivation with the frozen v1 domain-separation label (\texttt{src/core/derive.ts}).}]
+export const HKDF_INFO_V1 = new TextEncoder().encode(
+  'webauthn-prf-zktv vault key wrap v1',
+);
+
+export async function deriveWrapKeyFromPrf(prfOutput, info = HKDF_INFO_V1) {
+  const ikm = await crypto.subtle.importKey('raw', prfOutput, 'HKDF', false, ['deriveKey']);
+  return crypto.subtle.deriveKey(
+    { name: 'HKDF', hash: 'SHA-256', salt: new Uint8Array(0), info },
+    ikm,
+    { name: 'AES-GCM', length: 256 },
+    false, // non-extractable
+    ['encrypt', 'decrypt'],
+  );
+}
+\end{lstlisting}
 
 \section{Post-Quantum Considerations}
 Discuss the quantum-adequate nature of AES-256-GCM and HKDF-SHA256, based on NIST and national guidance.
