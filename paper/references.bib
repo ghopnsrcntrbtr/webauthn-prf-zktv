@@ -1,0 +1,82 @@
+% References for "WebAuthn PRF-Based Vault Key Wrapping and Zero-Knowledge
+% PWA Storage Architecture". Entries marked TODO-VERIFY have URLs that
+% should be confirmed before arXiv submission.
+
+@misc{webauthn-spec,
+  author       = {{W3C Web Authentication Working Group}},
+  title        = {Web Authentication: An {API} for accessing Public Key Credentials, Level 3},
+  howpublished = {W3C Working Draft},
+  year         = {2025},
+  url          = {https://www.w3.org/TR/webauthn-3/},
+  note         = {\S 10.1.4 defines the \texttt{prf} client extension}
+}
+
+@misc{webauthn-prf-docs,
+  author       = {{Yubico}},
+  title        = {The {WebAuthn} {PRF} extension},
+  howpublished = {Yubico Developers documentation},
+  year         = {2024},
+  url          = {https://developers.yubico.com/WebAuthn/Concepts/PRF_extension.html}
+}
+
+@misc{simplewebauthn-prf,
+  author       = {Miller, Matthew},
+  title        = {The {WebAuthn} {PRF} extension},
+  howpublished = {SimpleWebAuthn documentation},
+  year         = {2024},
+  url          = {https://simplewebauthn.dev/docs/advanced/prf}
+}
+
+@misc{bitwarden-prf-blog,
+  author       = {{Bitwarden}},
+  title        = {{PRF} {WebAuthn} and its role in passkeys},
+  howpublished = {Bitwarden Blog},
+  year         = {2024},
+  url          = {https://bitwarden.com/blog/prf-webauthn-and-its-role-in-passkeys/}
+}
+
+@misc{holestorage-prf,
+  title        = {hole.storage: client-side file encryption with the {WebAuthn} {PRF} extension},
+  howpublished = {Open-source project},
+  year         = {2024},
+  url          = {https://github.com/qwtel/hole.storage},
+  note         = {TODO-VERIFY: confirm project name and URL before submission}
+}
+
+@misc{trustvault-security,
+  author       = {Pinto, Ian},
+  title        = {{TrustVault-PWA}: security architecture and threat model documentation},
+  howpublished = {GitHub repository},
+  year         = {2026},
+  url          = {https://github.com/ghopnsrcntrbtr/TrustVault-PWA},
+  note         = {TODO-VERIFY: confirm repository visibility and URL before submission}
+}
+
+@misc{zktv-lib,
+  author       = {Pinto, Ian},
+  title        = {webauthn-prf-zktv: {WebAuthn} {PRF}-backed vault key wrapping with zero-knowledge {IndexedDB} storage, v0.1.0},
+  howpublished = {npm package and GitHub repository},
+  year         = {2026},
+  url          = {https://github.com/ghopnsrcntrbtr/webauthn-prf-zktv/releases/tag/v0.1.0},
+  note         = {Reference implementation for this paper; also published as \texttt{webauthn-prf-zktv} on npm}
+}
+
+@techreport{rfc5869,
+  author      = {Krawczyk, Hugo and Eronen, Pasi},
+  title       = {{HMAC}-based Extract-and-Expand Key Derivation Function ({HKDF})},
+  institution = {IETF},
+  type        = {RFC},
+  number      = {5869},
+  year        = {2010},
+  url         = {https://www.rfc-editor.org/rfc/rfc5869}
+}
+
+@techreport{nist-pqc,
+  author      = {Moody, Dustin and others},
+  title       = {Transition to Post-Quantum Cryptography Standards},
+  institution = {National Institute of Standards and Technology},
+  type        = {NIST Internal Report},
+  number      = {8547 (initial public draft)},
+  year        = {2024},
+  url         = {https://doi.org/10.6028/NIST.IR.8547.ipd}
+}
