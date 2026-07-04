@@ -9,6 +9,8 @@
     "type": "git",
     "url": "git+https://github.com/ghopnsrcntrbtr/webauthn-prf-zktv.git"
   },
+  "homepage": "https://github.com/ghopnsrcntrbtr/webauthn-prf-zktv#readme",
+  "bugs": { "url": "https://github.com/ghopnsrcntrbtr/webauthn-prf-zktv/issues" },
   "keywords": [
     "webauthn",
     "prf",

@@ -1,0 +1,22 @@
+  - name: Setup Node.js
+    uses: actions/setup-node@v4
+    with:
+      node-version: '20'
+      registry-url: 'https://registry.npmjs.org'
+
+  - name: Configure npm auth
+    run: |
+      echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+      npm config set //registry.npmjs.org/:_authToken "${{ secrets.NPM_TOKEN }}" --location=global
+
+  - name: Install deps
+    run: npm ci
+
+  - name: Verify (build/tests/typecheck/lint)
+    run: npm run verify
+
+  - name: Publish to npm
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    run: |
+      npm publish --access public
