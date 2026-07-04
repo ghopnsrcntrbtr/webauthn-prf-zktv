@@ -1,0 +1,214 @@
+% arXiv category: cs.CR (Cryptography and Security)
+% To adapt for IEEE later, change \documentclass to IEEEtran and adjust author/title blocks.
+
+\documentclass[runningheads]{llncs}
+
+% Packages
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{xcolor}
+
+% Metadata for arXiv and future journal submission
+\hypersetup{
+  pdftitle={WebAuthn PRF-Based Vault Key Wrapping and Zero-Knowledge PWA Storage},
+  pdfauthor={Your Name},
+  pdfsubject={cs.CR},
+  pdfkeywords={WebAuthn, PRF, passkeys, zero-knowledge, IndexedDB, PWA, cryptography}
+}
+
+% Listings settings for code/pseudo-code snippets
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\itshape\color{gray},
+  columns=fullflexible,
+  breaklines=true,
+  frame=single
+}
+
+\begin{document}
+
+\title{WebAuthn PRF-Based Vault Key Wrapping and Zero-Knowledge PWA Storage Architecture}
+
+\author{
+  Your Name\inst{1}
+}
+\institute{
+  Your Affiliation, City, Country\\
+  \email{your.email@example.com}
+}
+
+\maketitle
+
+\begin{abstract}
+This paper presents a client-side security architecture that combines the Web Authentication (WebAuthn) pseudo-random function (PRF) extension with symmetric cryptography and carefully engineered browser storage patterns to achieve strong zero-knowledge properties for web-based credential vaults.
+The design is grounded in the TrustVault-PWA project and informs the reusable \texttt{webauthn-prf-zktv} library.
+\end{abstract}
+
+\keywords{WebAuthn, PRF, passkeys, zero-knowledge, IndexedDB, PWA, cryptography}
+
+\section{Introduction}
+The Web Authentication (WebAuthn) standard and FIDO2 ecosystem provide strong public-key based authentication and passkeys that are increasingly used to replace passwords on the web.
+Recent extensions such as the pseudo-random function (PRF) allow a relying party to request a high-entropy symmetric secret derived from a passkey credential during an authentication ceremony, enabling end-to-end encryption of user data.\cite{webauthn-prf-docs,bitwarden-prf-blog}
+
+Password managers and credential vaults seek to offer zero-knowledge security: server-side or client-side storage alone should never be sufficient to reveal user secrets.
+Achieving this property in a web progressive web application (PWA) requires careful coordination of cryptography, browser APIs, and local storage.
+This paper formalizes a PRF-based vault key wrapping scheme and an IndexedDB storage architecture designed toward this goal.
+
+\subsection{Contributions}
+The main contributions are:
+\begin{itemize}
+  \item A formal description of a WebAuthn PRF-based vault key wrapping scheme suitable for PWAs.
+  \item An IndexedDB schema and migration strategy that reinforce zero-knowledge properties.
+  \item A reusable design for the \texttt{webauthn-prf-zktv} library that packages these patterns.
+  \item Discussion of post-quantum considerations and migration paths.
+\end{itemize}
+
+\section{Background and Related Work}
+\subsection{WebAuthn, Passkeys, and PRF}
+Summarize WebAuthn, FIDO2, passkeys, and the PRF extension.
+Reference the W3C WebAuthn specification and PRF extension documentation, as well as SimpleWebAuthn and Yubico developer guides.\cite{webauthn-spec,webauthn-prf-docs,simplewebauthn-prf}
+
+\subsection{PRF-Based Vault Encryption in Existing Systems}
+Describe how Bitwarden and other systems use WebAuthn PRF to derive keys for vault encryption, highlighting similarities and differences with the approach in this paper.\cite{bitwarden-prf-blog}
+Mention generic PRF helper libraries and file-encryption tools that integrate PRF without prescribing a full zero-knowledge vault architecture.\cite{holestorage-prf}
+
+\subsection{IndexedDB and Client-Side Storage}
+Review IndexedDB as a browser storage mechanism and common patterns for encrypting secrets at rest.
+Explain how TrustVault-PWA uses Dexie-backed IndexedDB, encrypts both secrets and metadata, and documents residual risks such as breach-detection prefixes.\cite{trustvault-security}
+
+\section{Threat Model}
+Define the attacker capabilities:
+\begin{itemize}
+  \item Stored-data compromise (IndexedDB dump, server backup).
+  \item Browser compromise (XSS, supply-chain attacks).
+  \item Authenticator or passkey compromise.
+  \item Harvest-now, decrypt-later with future quantum capabilities.
+\end{itemize}
+Explain the security goals (zero-knowledge storage, bounded exposure in browser compromise, PQ-readiness).
+
+\section{PRF-Based Vault Key Wrapping}
+\subsection{High-Level Design}
+Describe the enrollment and unlock flows where PRF output is used to derive a wrap key that encrypts the vault key.
+Clarify that \emph{only} wrapped vault keys, salts, and scheme identifiers are persisted; PRF seeds and wrap keys are never stored.
+
+\subsection{Pseudo-Code}
+The following algorithm expresses the core vault key wrapping procedure using WebAuthn PRF:
+
+\begin{algorithm}[h]
+  \caption{Vault Key Wrapping with WebAuthn PRF}
+  \begin{algorithmic}[1]
+    \Require WebAuthn credential $C$, PRF salt $s$, random vault key $K_v$
+    \Ensure Stored record $R$ that does not reveal $K_v$ without $C$
+    \State $prfSeed \gets \mathrm{EvaluatePRF}(C, s)$
+    \State $K_w \gets \mathrm{HKDF\_SHA256}(prfSeed, \text{info}=\text{``vault-wrap''})$
+    \State $(\mathrm{nonce}, \mathrm{cipher}) \gets \mathrm{AES\_256\_GCM\_Encrypt}(K_w, K_v)$
+    \State Zeroize $prfSeed$ and any raw representation of $K_v$
+    \State $R \gets ( \mathrm{cipher}, \mathrm{nonce}, s, \mathrm{scheme}=\text{``prf-v1''} )$
+    \State \Return $R$
+  \end{algorithmic}
+\end{algorithm}
+
+Similarly, define an algorithm for unwrapping:
+
+\begin{algorithm}[h]
+  \caption{Vault Key Unwrapping with WebAuthn PRF}
+  \begin{algorithmic}[1]
+    \Require WebAuthn credential $C$, stored record $R=(\mathrm{cipher}, \mathrm{nonce}, s,\mathrm{scheme})$
+    \Ensure Non-extractable vault key $K_v$
+    \State $prfSeed \gets \mathrm{EvaluatePRF}(C, s)$
+    \State $K_w \gets \mathrm{HKDF\_SHA256}(prfSeed, \text{info}=\text{``vault-wrap''})$
+    \State $K_v \gets \mathrm{AES\_256\_GCM\_Decrypt}(K_w, \mathrm{nonce}, \mathrm{cipher})$
+    \State Import $K_v$ into Web Crypto as a non-extractable \texttt{CryptoKey}
+    \State Zeroize $prfSeed$ and any raw buffer holding $K_v$
+    \State \Return $K_v$
+  \end{algorithmic}
+\end{algorithm}
+
+Replace these generic steps with implementation details from your \texttt{webauthn-prf-zktv} repository (function names, error handling, and type signatures).
+
+\subsection{Zero-Knowledge Argument}
+Formally analyze why stored data $R$ and encrypted vault contents are insufficient to recover secrets without the authenticator.
+Discuss assumptions on PRF, HKDF, and AES-256-GCM.
+
+\section{IndexedDB Storage Architecture}
+\subsection{Schema Overview}
+Describe the IndexedDB object stores:
+\begin{itemize}
+  \item \texttt{vaults}: wrapped vault keys, salts, scheme identifiers, minimal metadata.
+  \item \texttt{credentials}: ciphertexts for passwords and encrypted metadata.
+  \item \texttt{hibpPrefixes}: breach-detection prefixes treated as residuals.
+  \item \texttt{sessions}: ephemeral session metadata.
+\end{itemize}
+
+\subsection{Schema Diagram}
+Include a figure depicting the IndexedDB schema and relationships:
+
+\begin{figure}[h]
+  \centering
+  % Replace the placeholder box below with a TikZ diagram or an imported PDF/PNG.
+  \fbox{\parbox{0.8\linewidth}{
+    Diagram placeholder: IndexedDB stores (\texttt{vaults}, \texttt{credentials}, \texttt{hibpPrefixes}, \texttt{sessions}) and their key fields.
+    Derive this from your actual Dexie schema in the \texttt{TrustVault-PWA} and \texttt{webauthn-prf-zktv} repos.
+  }}
+  \caption{IndexedDB schema for vault and credential storage.}
+  \label{fig:indexeddb-schema}
+\end{figure}
+
+\subsection{Migrations and Security Properties}
+Explain how database versioning and migrations remove legacy device-key schemes and introduce new stores while preserving zero-knowledge properties.
+Summarize key hygiene practices (non-extractable keys, zeroization of buffers, residual tracking).
+
+\section{Implementation in \texttt{webauthn-prf-zktv}}
+Provide an overview of the library’s modules:
+\begin{itemize}
+  \item WebAuthn PRF helpers (registration/authentication options, capability detection).
+  \item Core crypto module (HKDF + AES-256-GCM wrapping).
+  \item Optional IndexedDB helpers and migrations for PWAs.
+\end{itemize}
+
+Use \texttt{lstlisting} environments to show representative TypeScript/JavaScript code from the GitHub repo (e.g., the function that wraps the vault key and the Dexie schema definition), being careful not to include proprietary or non-public content.
+
+\section{Post-Quantum Considerations}
+Discuss the quantum-adequate nature of AES-256-GCM and HKDF-SHA256, based on NIST and national guidance.
+Explain that current WebAuthn passkeys rely on elliptic-curve signatures, which are not post-quantum secure, and outline how PQ-capable passkeys and PRF could integrate with this architecture in the future.
+
+\section{Evaluation and Discussion}
+Outline possible evaluation strategies:
+\begin{itemize}
+  \item Security analysis under formal threat models.
+  \item Performance overhead of PRF evaluation and AES operations on typical devices.
+  \item Usability trade-offs between PRF-based biometric unlock and master-password fallback.
+\end{itemize}
+
+\section{Conclusion}
+Summarize the architecture and its contributions.
+Highlight how the library design enables other developers to adopt PRF-based zero-knowledge vaults with sound IndexedDB storage patterns.
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+% Example BibTeX entries (to be placed in references.bib):
+% @misc{webauthn-spec,
+%   title={Web Authentication: An API for accessing Public Key Credentials},
+%   howpublished={W3C Recommendation},
+%   year={2026}
+% }
+% @misc{webauthn-prf-docs,
+%   title={PRF Extension - WebAuthn},
+%   howpublished={Yubico Developers},
+%   year={2024}
+% }
+% @misc{bitwarden-prf-blog,
+%   title={PRF WebAuthn and its role in passkeys},
+%   howpublished={Bitwarden Blog},
+%   year={2025}
+% }
+
+\end{document}
