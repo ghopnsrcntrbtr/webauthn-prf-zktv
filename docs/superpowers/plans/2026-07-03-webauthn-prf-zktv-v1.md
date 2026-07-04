@@ -72,7 +72,7 @@ examples/node-unwrap/, examples/pwa-vite/
   "type": "module",
   "license": "MIT",
   "author": "opnsrcntrbtr",
-  "repository": { "type": "git", "url": "git+https://github.com/opnsrcntrbtr/webauthn-prf-zktv.git" },
+  "repository": { "type": "git", "url": "git+https://github.com/ghopnsrcntrbtr/webauthn-prf-zktv.git" },
   "keywords": ["webauthn", "prf", "hmac-secret", "passkey", "zero-knowledge", "vault", "aes-gcm", "hkdf", "indexeddb", "pwa", "e2ee"],
   "engines": { "node": ">=20.0.0" },
   "sideEffects": false,
@@ -2854,7 +2854,7 @@ Tests are co-located: `src/**/__tests__/*.test.ts`. WebAuthn tests stub
 - [ ] **Step 2: Write `README.md`**
 
 Content requirements (write in full, real prose):
-- Title + one-paragraph pitch: WebAuthn PRF-backed zero-knowledge vault key wrapping; DB dump alone can never unlock; extracted from TrustVault-PWA; reference implementation for the arXiv paper (link repo `https://github.com/opnsrcntrbtr/TrustVault-PWA`; paper link placeholder marked "paper link TBA on publication" is acceptable ONLY here since publication is a future external event).
+- Title + one-paragraph pitch: WebAuthn PRF-backed zero-knowledge vault key wrapping; DB dump alone can never unlock; extracted from TrustVault-PWA; reference implementation for the arXiv paper (link repo `https://github.com/ghopnsrcntrbtr/TrustVault-PWA`; paper link placeholder marked "paper link TBA on publication" is acceptable ONLY here since publication is a future external event).
 - Install: `npm install webauthn-prf-zktv`.
 - Browser support matrix (2026): Chrome/Edge (PRF-on-create 147+), Safari (macOS 15+/iOS 18+ iCloud Keychain), Firefox 147/148+, Android robust, Windows Hello (Win11 25H2+); Android WebView unsupported → pw-v1 fallback.
 - Quickstart code block (enroll + unlock + password fallback), exactly this:

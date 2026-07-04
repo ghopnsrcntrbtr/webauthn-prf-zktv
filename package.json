@@ -7,7 +7,7 @@
   "author": "opnsrcntrbtr",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/opnsrcntrbtr/webauthn-prf-zktv.git"
+    "url": "git+https://github.com/ghopnsrcntrbtr/webauthn-prf-zktv.git"
   },
   "keywords": [
     "webauthn",
