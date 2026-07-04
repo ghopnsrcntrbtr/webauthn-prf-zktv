@@ -4,7 +4,7 @@
   "description": "Zero-Knowledge TrustVault: WebAuthn PRF-backed vault key wrapping (HKDF-SHA256 → AES-256-GCM) with optional PWA IndexedDB storage patterns.",
   "type": "module",
   "license": "MIT",
-  "author": "Ian Pinto",
+  "author": "opnsrcntrbtr",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/opnsrcntrbtr/webauthn-prf-zktv.git"

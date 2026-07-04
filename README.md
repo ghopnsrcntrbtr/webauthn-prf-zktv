@@ -115,4 +115,4 @@ vault key.
 
 ## License
 
-MIT © Ian Pinto
+MIT © opnsrcntrbtr

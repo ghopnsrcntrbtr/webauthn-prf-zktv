@@ -71,7 +71,7 @@ examples/node-unwrap/, examples/pwa-vite/
   "description": "Zero-Knowledge TrustVault: WebAuthn PRF-backed vault key wrapping (HKDF-SHA256 → AES-256-GCM) with optional PWA IndexedDB storage patterns.",
   "type": "module",
   "license": "MIT",
-  "author": "Ian Pinto",
+  "author": "opnsrcntrbtr",
   "repository": { "type": "git", "url": "git+https://github.com/opnsrcntrbtr/webauthn-prf-zktv.git" },
   "keywords": ["webauthn", "prf", "hmac-secret", "passkey", "zero-knowledge", "vault", "aes-gcm", "hkdf", "indexeddb", "pwa", "e2ee"],
   "engines": { "node": ">=20.0.0" },
@@ -186,7 +186,7 @@ coverage/
 *.tsbuildinfo
 ```
 
-`LICENSE`: standard MIT text, `Copyright (c) 2026 Ian Pinto`.
+`LICENSE`: standard MIT text, `Copyright (c) 2026 opnsrcntrbtr`.
 
 - [ ] **Step 8: Write entry stubs**
 
