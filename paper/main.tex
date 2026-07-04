@@ -13,11 +13,13 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.multipart,arrows.meta}
 
 % Metadata for arXiv and future journal submission
 \hypersetup{
   pdftitle={WebAuthn PRF-Based Vault Key Wrapping and Zero-Knowledge PWA Storage},
-  pdfauthor={Your Name},
+  pdfauthor={Ian Pinto},
   pdfsubject={cs.CR},
   pdfkeywords={WebAuthn, PRF, passkeys, zero-knowledge, IndexedDB, PWA, cryptography}
 }
@@ -43,11 +45,11 @@
 \title{WebAuthn PRF-Based Vault Key Wrapping and Zero-Knowledge PWA Storage Architecture}
 
 \author{
-  Your Name\inst{1}
+  Ian Pinto\inst{1}
 }
 \institute{
-  Your Affiliation, City, Country\\
-  \email{your.email@example.com}
+  Independent Researcher, Mumbai, India\\
+  \email{ianpinto1980@gmail.com}
 }
 
 \maketitle
@@ -178,14 +180,46 @@ Include a figure depicting the IndexedDB schema and relationships:
 
 \begin{figure}[h]
   \centering
-  % Replace the placeholder box below with a TikZ diagram or an imported PDF/PNG.
-  \fbox{\parbox{0.8\linewidth}{
-    Diagram placeholder: IndexedDB database \texttt{zktv} v1 with stores
-    \texttt{vaults} (PK \texttt{[vaultId, scheme]} $\to$ serialized \texttt{WrappedSecretRecord}, \texttt{updatedAt}),
-    \texttt{credentials} (PK \texttt{credentialId}, index \texttt{vaultId} $\to$ \texttt{counter}, \texttt{prfSalt}, \texttt{transports}, \texttt{createdAt}), and
-    \texttt{meta} (PK \texttt{key}). Arrow: \texttt{credentials.vaultId} $\to$ \texttt{vaults.vaultId} (1 vault : N credentials).
-  }}
-  \caption{IndexedDB schema for vault and credential storage.}
+  \begin{tikzpicture}[
+    font=\footnotesize,
+    store/.style={
+      rectangle split, rectangle split parts=2, rectangle split part fill={blue!12, white},
+      draw=black!70, rounded corners=1pt, align=left, inner sep=5pt,
+      text width=4.6cm
+    },
+    pk/.style={font=\footnotesize\bfseries},
+    rel/.style={-{Stealth}, thick, black!70}
+  ]
+    \node[store] (vaults) {%
+      \textbf{\texttt{vaults}}
+      \nodepart{two}%
+      \textbf{PK} \texttt{[vaultId, scheme]}\\[2pt]
+      \texttt{vaultId}: string\\
+      \texttt{scheme}: \texttt{prf-v1} $\mid$ \texttt{pw-v1}\\
+      \texttt{record}: string \textit{(serialized \texttt{WrappedSecretRecord}, \texttt{v:1} JSON, base64url fields)}\\
+      \texttt{updatedAt}: number
+    };
+    \node[store, right=1.4cm of vaults] (credentials) {%
+      \textbf{\texttt{credentials}}
+      \nodepart{two}%
+      \textbf{PK} \texttt{credentialId} \textit{(base64url)}\\
+      \textbf{IX} \texttt{vaultId}\\[2pt]
+      \texttt{vaultId}: string\\
+      \texttt{counter}: number \textit{(replay check)}\\
+      \texttt{prfSalt}: string \textit{(base64url, non-secret)}\\
+      \texttt{transports}: string[]\\
+      \texttt{createdAt}: number
+    };
+    \node[store, below=0.9cm of vaults, text width=4.6cm] (meta) {%
+      \textbf{\texttt{meta}}
+      \nodepart{two}%
+      \textbf{PK} \texttt{key}\\[2pt]
+      key--value rows for application metadata and migrations
+    };
+    \draw[rel] (credentials.west) -- node[above, font=\scriptsize]{$N : 1$}
+      node[below, font=\scriptsize]{\texttt{vaultId}} (vaults.east);
+  \end{tikzpicture}
+  \caption{IndexedDB schema created by \texttt{openVaultDb} (database \texttt{zktv}, version~1; \texttt{src/indexeddb/db.ts}). One vault may hold up to two wrapped records (\texttt{prf-v1} and the \texttt{pw-v1} fallback) via the composite primary key, and any number of PRF credentials via the \texttt{vaultId} index. Only wrapped records and non-secret credential metadata are ever persisted.}
   \label{fig:indexeddb-schema}
 \end{figure}
 
