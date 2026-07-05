@@ -5,3 +5,8 @@ coverage/
 .remember/
 
 graphify-out/cost.json
+paper/main.aux
+paper/main.bbl
+paper/main.blg
+paper/main.log
+paper/main.out
