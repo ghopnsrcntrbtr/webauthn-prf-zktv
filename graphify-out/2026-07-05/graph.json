@@ -4,24 +4,114 @@
   "graph": {},
   "nodes": [
     {
-      "label": "vectors.test.ts",
+      "label": "verify.test.ts",
       "file_type": "code",
-      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "src_core_tests_vectors_test",
-      "community": 6,
-      "norm_label": "vectors.test.ts"
+      "id": "src_webauthn_tests_verify_test",
+      "community": 8,
+      "norm_label": "verify.test.ts"
     },
     {
-      "label": "SECRET",
+      "label": "makeAuthData()",
       "file_type": "code",
-      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "src_webauthn_tests_verify_test_makeauthdata",
+      "community": 8,
+      "norm_label": "makeauthdata()"
+    },
+    {
+      "label": "makeClientData()",
+      "file_type": "code",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "src_webauthn_tests_verify_test_makeclientdata",
+      "community": 8,
+      "norm_label": "makeclientdata()"
+    },
+    {
+      "label": "valid",
+      "file_type": "code",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "src_webauthn_tests_verify_test_valid",
+      "community": 8,
+      "norm_label": "valid"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "src/webauthn/index.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_webauthn_index",
+      "community": 8,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "verify.ts",
+      "file_type": "code",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "src_webauthn_verify",
+      "community": 8,
+      "norm_label": "verify.ts"
+    },
+    {
+      "label": "readCounter()",
+      "file_type": "code",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "src_webauthn_verify_readcounter",
+      "community": 8,
+      "norm_label": "readcounter()"
+    },
+    {
+      "label": "AuthenticatorFlags",
+      "file_type": "code",
+      "source_file": "src/webauthn/verify.ts",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "src_core_tests_vectors_test_secret",
-      "community": 6,
-      "norm_label": "secret"
+      "id": "src_webauthn_verify_authenticatorflags",
+      "community": 8,
+      "norm_label": "authenticatorflags"
+    },
+    {
+      "label": "readAuthenticatorFlags()",
+      "file_type": "code",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "src_webauthn_verify_readauthenticatorflags",
+      "community": 8,
+      "norm_label": "readauthenticatorflags()"
+    },
+    {
+      "label": "VerifyAssertionArgs",
+      "file_type": "code",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L39",
+      "_origin": "ast",
+      "id": "src_webauthn_verify_verifyassertionargs",
+      "community": 8,
+      "norm_label": "verifyassertionargs"
+    },
+    {
+      "label": "verifyAssertionResponse()",
+      "file_type": "code",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L50",
+      "_origin": "ast",
+      "id": "src_webauthn_verify_verifyassertionresponse",
+      "community": 8,
+      "norm_label": "verifyassertionresponse()"
     },
     {
       "label": "errors.test.ts",
@@ -162,6 +252,26 @@
       "community": 1,
       "norm_label": "makelegacyrecord()",
       "id": "src_core_tests_trustvault_test_makelegacyrecord"
+    },
+    {
+      "label": "vectors.test.ts",
+      "file_type": "code",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "vectors.test.ts",
+      "id": "src_core_tests_vectors_test"
+    },
+    {
+      "label": "SECRET",
+      "file_type": "code",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L15",
+      "_origin": "ast",
+      "community": 1,
+      "norm_label": "secret",
+      "id": "src_core_tests_vectors_test_secret"
     },
     {
       "label": "wrap.test.ts",
@@ -419,7 +529,7 @@
       "source_file": "src/core/types.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 3,
+      "community": 5,
       "norm_label": "wrappedsecretrecord",
       "id": "src_core_types_wrappedsecretrecord"
     },
@@ -799,7 +909,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L62",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": "zktvdb",
       "id": "src_indexeddb_db_zktvdb"
     },
@@ -809,7 +919,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": ".constructor()",
       "id": "src_indexeddb_db_zktvdb_constructor"
     },
@@ -819,7 +929,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": ".savewrappedvault()",
       "id": "src_indexeddb_db_zktvdb_savewrappedvault"
     },
@@ -839,7 +949,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L91",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": ".savecredentialrecord()",
       "id": "src_indexeddb_db_zktvdb_savecredentialrecord"
     },
@@ -849,7 +959,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L95",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": ".getcredentialrecord()",
       "id": "src_indexeddb_db_zktvdb_getcredentialrecord"
     },
@@ -859,7 +969,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": ".updatecounter()",
       "id": "src_indexeddb_db_zktvdb_updatecounter"
     },
@@ -869,7 +979,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L110",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": ".clearvault()",
       "id": "src_indexeddb_db_zktvdb_clearvault"
     },
@@ -879,7 +989,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L133",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": ".securitywipe()",
       "id": "src_indexeddb_db_zktvdb_securitywipe"
     },
@@ -889,7 +999,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L139",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": ".close()",
       "id": "src_indexeddb_db_zktvdb_close"
     },
@@ -899,7 +1009,7 @@
       "source_file": "src/indexeddb/db.ts",
       "source_location": "L143",
       "_origin": "ast",
-      "community": 5,
+      "community": 6,
       "norm_label": ".request()",
       "id": "src_indexeddb_db_zktvdb_request"
     },
@@ -999,7 +1109,7 @@
       "source_file": "src/utils/zeroize.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "zeroize.ts",
       "id": "src_utils_zeroize"
     },
@@ -1009,7 +1119,7 @@
       "source_file": "src/utils/zeroize.ts",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "zeroize()",
       "id": "src_utils_zeroize_zeroize"
     },
@@ -1139,7 +1249,7 @@
       "source_file": "src/webauthn/__tests__/vault.test.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "vault.test.ts",
       "id": "src_webauthn_tests_vault_test"
     },
@@ -1149,7 +1259,7 @@
       "source_file": "src/webauthn/__tests__/vault.test.ts",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "raw_id",
       "id": "src_webauthn_tests_vault_test_raw_id"
     },
@@ -1159,7 +1269,7 @@
       "source_file": "src/webauthn/__tests__/vault.test.ts",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "createext",
       "id": "src_webauthn_tests_vault_test_createext"
     },
@@ -1169,7 +1279,7 @@
       "source_file": "src/webauthn/__tests__/vault.test.ts",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "stubauthenticator()",
       "id": "src_webauthn_tests_vault_test_stubauthenticator"
     },
@@ -1179,7 +1289,7 @@
       "source_file": "src/webauthn/__tests__/vault.test.ts",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "enroll",
       "id": "src_webauthn_tests_vault_test_enroll"
     },
@@ -1189,49 +1299,9 @@
       "source_file": "src/webauthn/__tests__/vault.test.ts",
       "source_location": "L73",
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "secret",
       "id": "src_webauthn_tests_vault_test_secret"
-    },
-    {
-      "label": "verify.test.ts",
-      "file_type": "code",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "verify.test.ts",
-      "id": "src_webauthn_tests_verify_test"
-    },
-    {
-      "label": "makeAuthData()",
-      "file_type": "code",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L5",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "makeauthdata()",
-      "id": "src_webauthn_tests_verify_test_makeauthdata"
-    },
-    {
-      "label": "makeClientData()",
-      "file_type": "code",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L11",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "makeclientdata()",
-      "id": "src_webauthn_tests_verify_test_makeclientdata"
-    },
-    {
-      "label": "valid",
-      "file_type": "code",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L24",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "valid",
-      "id": "src_webauthn_tests_verify_test_valid"
     },
     {
       "label": "ceremonies.ts",
@@ -1289,7 +1359,7 @@
       "source_file": "src/webauthn/ceremonies.ts",
       "source_location": "L98",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "enrolloptions",
       "id": "src_webauthn_ceremonies_enrolloptions"
     },
@@ -1332,16 +1402,6 @@
       "community": 0,
       "norm_label": "translatecreateerror()",
       "id": "src_webauthn_ceremonies_translatecreateerror"
-    },
-    {
-      "label": "index.ts",
-      "file_type": "code",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "index.ts",
-      "id": "src_webauthn_index"
     },
     {
       "label": "prf-types.ts",
@@ -1449,7 +1509,7 @@
       "source_file": "src/webauthn/vault.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "vault.ts",
       "id": "src_webauthn_vault"
     },
@@ -1459,7 +1519,7 @@
       "source_file": "src/webauthn/vault.ts",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "enrollvaultoptions",
       "id": "src_webauthn_vault_enrollvaultoptions"
     },
@@ -1469,7 +1529,7 @@
       "source_file": "src/webauthn/vault.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "enrollvaultresult",
       "id": "src_webauthn_vault_enrollvaultresult"
     },
@@ -1479,7 +1539,7 @@
       "source_file": "src/webauthn/vault.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "enrollvault()",
       "id": "src_webauthn_vault_enrollvault"
     },
@@ -1489,7 +1549,7 @@
       "source_file": "src/webauthn/vault.ts",
       "source_location": "L42",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "unlockvaultoptions",
       "id": "src_webauthn_vault_unlockvaultoptions"
     },
@@ -1499,7 +1559,7 @@
       "source_file": "src/webauthn/vault.ts",
       "source_location": "L49",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "unlockvaultresult",
       "id": "src_webauthn_vault_unlockvaultresult"
     },
@@ -1509,61 +1569,267 @@
       "source_file": "src/webauthn/vault.ts",
       "source_location": "L57",
       "_origin": "ast",
-      "community": 0,
+      "community": 5,
       "norm_label": "unlockvault()",
       "id": "src_webauthn_vault_unlockvault"
-    },
-    {
-      "label": "verify.ts",
-      "file_type": "code",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "verify.ts",
-      "id": "src_webauthn_verify"
-    },
-    {
-      "label": "readCounter()",
-      "file_type": "code",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L4",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "readcounter()",
-      "id": "src_webauthn_verify_readcounter"
-    },
-    {
-      "label": "VerifyAssertionArgs",
-      "file_type": "code",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "verifyassertionargs",
-      "id": "src_webauthn_verify_verifyassertionargs"
-    },
-    {
-      "label": "verifyAssertionResponse()",
-      "file_type": "code",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L25",
-      "_origin": "ast",
-      "community": 0,
-      "norm_label": "verifyassertionresponse()",
-      "id": "src_webauthn_verify_verifyassertionresponse"
     }
   ],
   "links": [
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "src_webauthn_tests_verify_test",
+      "target": "src_webauthn_tests_verify_test_makeauthdata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_webauthn_tests_verify_test",
+      "target": "src_webauthn_tests_verify_test_makeclientdata",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "src_webauthn_tests_verify_test",
+      "target": "src_webauthn_tests_verify_test_valid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_webauthn_tests_verify_test",
+      "target": "src_webauthn_verify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_webauthn_tests_verify_test",
+      "target": "src_webauthn_verify_readauthenticatorflags",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_webauthn_tests_verify_test",
+      "target": "src_webauthn_verify_readcounter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/__tests__/verify.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "src_webauthn_tests_verify_test",
+      "target": "src_webauthn_verify_verifyassertionresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/index.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_webauthn_index",
+      "target": "src_webauthn_verify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/index.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_webauthn_index",
+      "target": "src_webauthn_verify_authenticatorflags",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/index.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_webauthn_index",
+      "target": "src_webauthn_verify_readauthenticatorflags",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/index.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_webauthn_index",
+      "target": "src_webauthn_verify_readcounter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/index.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "src_webauthn_index",
+      "target": "src_webauthn_verify_verifyassertionargs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "re-export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/index.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "src_webauthn_index",
+      "target": "src_webauthn_verify_verifyassertionresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/ceremonies.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_webauthn_ceremonies",
+      "target": "src_webauthn_verify"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/verify.ts",
       "source_location": "L15",
       "weight": 1.0,
-      "source": "src_core_tests_vectors_test",
-      "target": "src_core_tests_vectors_test_secret",
+      "source": "src_webauthn_verify",
+      "target": "src_webauthn_verify_authenticatorflags",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "src_webauthn_verify",
+      "target": "src_webauthn_verify_readauthenticatorflags",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "src_webauthn_verify",
+      "target": "src_webauthn_verify_readcounter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "source": "src_webauthn_verify",
+      "target": "src_webauthn_verify_verifyassertionargs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "source": "src_webauthn_verify",
+      "target": "src_webauthn_verify_verifyassertionresponse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/ceremonies.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_webauthn_ceremonies",
+      "target": "src_webauthn_verify_readcounter"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/ceremonies.ts",
+      "source_location": "L214",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_webauthn_ceremonies_parseattestationcounter",
+      "target": "src_webauthn_verify_readcounter"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/verify.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "src_webauthn_verify_verifyassertionresponse",
+      "target": "src_webauthn_verify_readcounter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/webauthn/ceremonies.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_webauthn_ceremonies",
+      "target": "src_webauthn_verify_verifyassertionresponse"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/webauthn/ceremonies.ts",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "src_webauthn_ceremonies_evaluateprf",
+      "target": "src_webauthn_verify_verifyassertionresponse"
     },
     {
       "relation": "imports_from",
@@ -2049,6 +2315,104 @@
       "confidence_score": 1.0,
       "source": "src_core_tests_trustvault_test_makelegacyrecord",
       "target": "src_utils_base64_tobase64"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_core_tests_vectors_test",
+      "target": "src_core_tests_vectors_test_secret"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_core_tests_vectors_test",
+      "target": "src_core_types"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_core_tests_vectors_test",
+      "target": "src_core_types_wrappedsecretrecord"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_core_tests_vectors_test",
+      "target": "src_core_wrap"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_core_tests_vectors_test",
+      "target": "src_core_wrap_unwrapsecretbytes"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_core_tests_vectors_test",
+      "target": "src_errors"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_core_tests_vectors_test",
+      "target": "src_errors_decrypterror"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_core_tests_vectors_test",
+      "target": "src_utils_base64"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/core/__tests__/vectors.test.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "src_core_tests_vectors_test",
+      "target": "src_utils_base64_frombase64url"
     },
     {
       "relation": "contains",
@@ -3656,33 +4020,11 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_tests_verify_test",
-      "target": "src_errors"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/webauthn/vault.ts",
       "source_location": "L3",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_webauthn_vault",
-      "target": "src_errors"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_verify",
       "target": "src_errors"
     },
     {
@@ -3964,28 +4306,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_webauthn_tests_evaluateprf_test",
-      "target": "src_errors_replayerror"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_tests_verify_test",
-      "target": "src_errors_replayerror"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_verify",
       "target": "src_errors_replayerror"
     },
     {
@@ -5203,69 +5523,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_tests_verify_test",
-      "target": "src_webauthn_tests_verify_test_makeauthdata"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_tests_verify_test",
-      "target": "src_webauthn_tests_verify_test_makeclientdata"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_tests_verify_test",
-      "target": "src_webauthn_tests_verify_test_valid"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_tests_verify_test",
-      "target": "src_webauthn_verify"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_tests_verify_test",
-      "target": "src_webauthn_verify_readcounter"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/__tests__/verify.test.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_tests_verify_test",
-      "target": "src_webauthn_verify_verifyassertionresponse"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "src/webauthn/ceremonies.ts",
       "source_location": "L98",
       "weight": 1.0,
@@ -5412,78 +5669,12 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/ceremonies.ts",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_ceremonies",
-      "target": "src_webauthn_verify"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/ceremonies.ts",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_ceremonies",
-      "target": "src_webauthn_verify_readcounter"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/ceremonies.ts",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_ceremonies",
-      "target": "src_webauthn_verify_verifyassertionresponse"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_ceremonies"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "src/webauthn/vault.ts",
       "source_location": "L5",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "src_webauthn_vault",
       "target": "src_webauthn_ceremonies"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_ceremonies_evaluateprfoptions"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_ceremonies_prfevaluation"
     },
     {
       "relation": "calls",
@@ -5519,28 +5710,6 @@
       "target": "src_webauthn_support_iswebauthnsupported"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/webauthn/ceremonies.ts",
-      "source_location": "L70",
-      "weight": 1.0,
-      "source": "src_webauthn_ceremonies_evaluateprf",
-      "target": "src_webauthn_verify_verifyassertionresponse"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_ceremonies_evaluateprf"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5574,17 +5743,6 @@
       "target": "src_webauthn_ceremonies_tryextractprfoutput"
     },
     {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_ceremonies_enrolloptions"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5605,17 +5763,6 @@
       "confidence_score": 1.0,
       "source": "src_webauthn_vault_enrollvaultoptions",
       "target": "src_webauthn_ceremonies_enrolloptions"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_ceremonies_enrollresult"
     },
     {
       "relation": "calls",
@@ -5651,17 +5798,6 @@
       "target": "src_webauthn_support_iswebauthnsupported"
     },
     {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_ceremonies_enrollprfcredential"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -5682,204 +5818,6 @@
       "weight": 1.0,
       "source": "src_webauthn_vault_enrollvault",
       "target": "src_webauthn_ceremonies_enrollprfcredential"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/ceremonies.ts",
-      "source_location": "L214",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_ceremonies_parseattestationcounter",
-      "target": "src_webauthn_verify_readcounter"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_support"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_support_detectprfsupport"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_support_isprfviableonthisclient"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_support_iswebauthnsupported"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_support_prfsupport"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_support_prfviability"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_vault"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_vault_enrollvault"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_vault_enrollvaultoptions"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_vault_enrollvaultresult"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_vault_unlockvault"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_vault_unlockvaultoptions"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_vault_unlockvaultresult"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_verify"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_verify_readcounter"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_verify_verifyassertionargs"
-    },
-    {
-      "relation": "re_exports",
-      "context": "re-export",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/index.ts",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_index",
-      "target": "src_webauthn_verify_verifyassertionresponse"
     },
     {
       "relation": "contains",
@@ -6064,49 +6002,8 @@
       "confidence_score": 1.0,
       "source": "src_webauthn_vault",
       "target": "src_webauthn_vault_unlockvaultresult"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_verify",
-      "target": "src_webauthn_verify_readcounter"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_verify",
-      "target": "src_webauthn_verify_verifyassertionargs"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_verify",
-      "target": "src_webauthn_verify_verifyassertionresponse"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "src/webauthn/verify.ts",
-      "source_location": "L44",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "src_webauthn_verify_verifyassertionresponse",
-      "target": "src_webauthn_verify_readcounter"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "542d6d7e2f88b3ac404a586cf61b958d0be43247"
+  "built_at_commit": "db3f58bf79fa9fe9fbdbee33dc5d54aa6aa93dbf"
 }

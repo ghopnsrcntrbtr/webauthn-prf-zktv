@@ -115,9 +115,9 @@
     "semantic_hash": "8e9574129631eb7acc5fdc7d7fc406db"
   },
   "src/webauthn/__tests__/verify.test.ts": {
-    "mtime": 1783161523.9336479,
-    "ast_hash": "491a99dd1572ded4c260df355cbb2157",
-    "semantic_hash": "491a99dd1572ded4c260df355cbb2157"
+    "mtime": 1783238647.4093292,
+    "ast_hash": "f75777bb2846a089c2e0023c5e365c56",
+    "semantic_hash": ""
   },
   "src/webauthn/ceremonies.ts": {
     "mtime": 1783161523.9338267,
@@ -125,9 +125,9 @@
     "semantic_hash": "48c5837bb559e59fec3d9c5de53cfef3"
   },
   "src/webauthn/index.ts": {
-    "mtime": 1783161523.9340215,
-    "ast_hash": "907c13aba88a14383c1a1e3d737c6c48",
-    "semantic_hash": "907c13aba88a14383c1a1e3d737c6c48"
+    "mtime": 1783238659.1925983,
+    "ast_hash": "933104e1d2a57b82011ce512034e3153",
+    "semantic_hash": ""
   },
   "src/webauthn/prf-types.ts": {
     "mtime": 1783161523.9341478,
@@ -145,9 +145,9 @@
     "semantic_hash": "dabdb2816ff60fe289da7291019a5b63"
   },
   "src/webauthn/verify.ts": {
-    "mtime": 1783161523.9346516,
-    "ast_hash": "dac4962fc289a9c31daa422204685112",
-    "semantic_hash": "dac4962fc289a9c31daa422204685112"
+    "mtime": 1783238657.3067284,
+    "ast_hash": "76c2d0872158d6bdf432aff6ad4b99c8",
+    "semantic_hash": ""
   },
   "src/core/__tests__/vectors.test.ts": {
     "mtime": 1783238557.149798,
