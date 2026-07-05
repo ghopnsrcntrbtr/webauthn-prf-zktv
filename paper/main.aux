@@ -1,0 +1,78 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand*\HyPL@Entry[1]{}
+\citation{webauthn-prf-docs,bitwarden-prf-blog}
+\citation{zktv-lib}
+\citation{webauthn-spec}
+\citation{webauthn-spec,webauthn-prf-docs}
+\citation{webauthn-prf-docs}
+\citation{simplewebauthn-prf}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {title}{WebAuthn PRF-Based Vault Key Wrapping and Zero-Knowledge PWA Storage Architecture}{1}{chapter.1}\protected@file@percent }
+\@writefile{toc}{\authcount {1}}
+\@writefile{toc}{\contentsline {author}{ Ian Pinto }{1}{chapter.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}Contributions}{1}{subsection.1.1.1}\protected@file@percent }
+\citation{bitwarden-prf-blog}
+\citation{holestorage-prf}
+\citation{trustvault-security}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Background and Related Work}{2}{section.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}WebAuthn, Passkeys, and PRF}{2}{subsection.1.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}PRF-Based Vault Encryption in Existing Systems}{2}{subsection.1.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}IndexedDB and Client-Side Storage}{2}{subsection.1.2.3}\protected@file@percent }
+\citation{rfc5869}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Threat Model}{3}{section.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}PRF-Based Vault Key Wrapping}{3}{section.1.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}High-Level Design}{3}{subsection.1.4.1}\protected@file@percent }
+\citation{rfc5869}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Pseudo-Code}{4}{subsection.1.4.2}\protected@file@percent }
+\@writefile{loa}{\contentsline {algorithm}{\numberline {1}{\ignorespaces Vault key wrapping (\texttt  {enrollVault} $\to $ \texttt  {wrapSecret}, scheme \texttt  {prf-v1})}}{4}{algorithm.1}\protected@file@percent }
+\newlabel{alg:wrap}{{1}{4}{Pseudo-Code}{algorithm.1}{}}
+\citation{trustvault-security}
+\@writefile{loa}{\contentsline {algorithm}{\numberline {2}{\ignorespaces Vault key unwrapping (\texttt  {unlockVault} $\to $ \texttt  {unwrapSecret})}}{5}{algorithm.2}\protected@file@percent }
+\newlabel{alg:unwrap}{{2}{5}{Pseudo-Code}{algorithm.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Zero-Knowledge Argument}{5}{subsection.1.4.3}\protected@file@percent }
+\newlabel{sec:zk}{{4.3}{5}{Zero-Knowledge Argument}{subsection.1.4.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}IndexedDB Storage Architecture}{5}{section.1.5}\protected@file@percent }
+\newlabel{sec:idb}{{5}{5}{IndexedDB Storage Architecture}{section.1.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Schema Overview}{5}{subsection.1.5.1}\protected@file@percent }
+\citation{zktv-lib}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Schema Diagram}{6}{subsection.1.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Migrations and Security Properties}{6}{subsection.1.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Implementation in \texttt  {webauthn-prf-zktv}}{6}{section.1.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces IndexedDB schema created by \texttt  {openVaultDb} (database \texttt  {zktv}, version\nobreakspace  {}1; \texttt  {src/indexeddb/db.ts}). One vault may hold up to two wrapped records (\texttt  {prf-v1} and the \texttt  {pw-v1} fallback) via the composite primary key, and any number of PRF credentials via the \texttt  {vaultId} index. Only wrapped records and non-secret credential metadata are ever persisted.}}{7}{figure.1.1}\protected@file@percent }
+\newlabel{fig:indexeddb-schema}{{1}{7}{IndexedDB schema created by \texttt {openVaultDb} (database \texttt {zktv}, version~1; \texttt {src/indexeddb/db.ts}). One vault may hold up to two wrapped records (\texttt {prf-v1} and the \texttt {pw-v1} fallback) via the composite primary key, and any number of PRF credentials via the \texttt {vaultId} index. Only wrapped records and non-secret credential metadata are ever persisted}{figure.1.1}{}}
+\citation{nist-pqc}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1.1}\texttt  {wrapSecret}: the three wrap paths (PRF, password, caller-supplied wrap key).}{8}{lstlisting.1.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1.2}HKDF derivation with the frozen v1 domain-separation label (\texttt  {src/core/derive.ts}).}{8}{lstlisting.1.2}\protected@file@percent }
+\citation{zktv-lib}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Post-Quantum Considerations}{9}{section.1.7}\protected@file@percent }
+\newlabel{sec:pq}{{7}{9}{Post-Quantum Considerations}{section.1.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Evaluation and Discussion}{9}{section.1.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Conclusion}{9}{section.1.9}\protected@file@percent }
+\bibstyle{plain}
+\bibdata{references}
+\bibcite{holestorage-prf}{1}
+\bibcite{bitwarden-prf-blog}{2}
+\bibcite{rfc5869}{3}
+\bibcite{simplewebauthn-prf}{4}
+\bibcite{nist-pqc}{5}
+\bibcite{trustvault-security}{6}
+\bibcite{zktv-lib}{7}
+\bibcite{webauthn-spec}{8}
+\bibcite{webauthn-prf-docs}{9}
+\gdef \@abspage@last{10}

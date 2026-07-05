@@ -1,0 +1,56 @@
+\begin{thebibliography}{1}
+
+\bibitem{holestorage-prf}
+holestorage: client-side file encryption with the {WebAuthn} {PRF} extension.
+\newblock Open-source project, 2024.
+\newblock Available at \url{https://github.com/holestorage/webauthn-prf}.
+
+\bibitem{bitwarden-prf-blog}
+{Bitwarden}.
+\newblock {PRF} {WebAuthn} and its role in passkeys.
+\newblock Bitwarden Blog, 2024.
+
+\bibitem{rfc5869}
+Hugo Krawczyk and Pasi Eronen.
+\newblock {HMAC}-based extract-and-expand key derivation function ({HKDF}).
+\newblock RFC 5869, IETF, 2010.
+
+\bibitem{simplewebauthn-prf}
+Matthew Miller.
+\newblock The {WebAuthn} {PRF} extension.
+\newblock SimpleWebAuthn documentation, 2024.
+
+\bibitem{nist-pqc}
+Dustin Moody et~al.
+\newblock Transition to post-quantum cryptography standards.
+\newblock NIST Internal Report 8547 (initial public draft), National Institute
+  of Standards and Technology, 2024.
+
+\bibitem{trustvault-security}
+Ian Pinto.
+\newblock {TrustVault-PWA}: security architecture and threat model
+  documentation.
+\newblock GitHub repository, 2026.
+\newblock Available at \url{https://github.com/opnsrcntrbtr/TrustVault-PWA}.
+
+\bibitem{zktv-lib}
+Ian Pinto.
+\newblock webauthn-prf-zktv: {WebAuthn} {PRF}-backed vault key wrapping with
+  zero-knowledge {IndexedDB} storage, v0.1.0.
+\newblock npm package and GitHub repository, 2026.
+\newblock Reference implementation for this paper; also published as
+  \texttt{webauthn-prf-zktv} on npm.
+
+\bibitem{webauthn-spec}
+{W3C Web Authentication Working Group}.
+\newblock Web authentication: An {API} for accessing public key credentials,
+  level 3.
+\newblock W3C Working Draft, 2025.
+\newblock \S 10.1.4 defines the \texttt{prf} client extension.
+
+\bibitem{webauthn-prf-docs}
+{Yubico}.
+\newblock The {WebAuthn} {PRF} extension.
+\newblock Yubico Developers documentation, 2024.
+
+\end{thebibliography}
