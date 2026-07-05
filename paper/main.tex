@@ -98,6 +98,14 @@ Bitwarden uses the PRF extension to unlock its vault without the master password
 The scheme in this paper differs in three ways: (i) the wrap key is derived through HKDF with an explicit versioned domain-separation label rather than used directly; (ii) client-side replay verification (challenge, origin, signature counter) is an integral step of the unlock algorithm; and (iii) the record format and storage schema are specified together, so that the zero-knowledge property can be argued about the \emph{entire} persisted state.
 Generic PRF helper libraries and file-encryption demonstrations~\cite{holestorage-prf} integrate the extension but do not prescribe a complete vault architecture with fallback, migration, and storage semantics.
 
+\subsection{Password-Manager and Vault Architectures}
+Web credential vaults have explored several trust models orthogonal to this work's.
+Horcrux~\cite{horcrux} secret-shares credentials across multiple keystores so that no single server compromise reveals passwords; AuthStore~\cite{authstore} strengthens password-derived keys with a PAKE against untrusted storage servers; and SafeKeeper~\cite{safekeeper} anchors password confidentiality in a server-side trusted execution environment.
+These designs distribute or harden \emph{server-side} trust, whereas the present scheme removes the server from the confidentiality boundary entirely: the unlock secret never leaves the authenticator, and the persisted client state is the only attack surface.
+Multi-factor derivation frameworks --- MFDPG~\cite{mfdpg} and the MFKDF2 family~\cite{mfkdf2}, the latter of which explicitly contemplates the WebAuthn PRF as a derivation factor --- are complementary: the wrapping scheme presented here can serve as the PRF-factor envelope inside such constructions without changing the record format.
+Finally, F\'{a}brega et al.~\cite{injection-attacks} demonstrate that end-to-end encrypted password managers leak through non-cryptographic system surfaces (telemetry, caching, and pre-encryption compression or deduplication) under adversarial data injection.
+Those channels are out of scope for the storage layer formalized here, but Sect.~\ref{sec:zk} is deliberately scoped to \emph{persisted state} for exactly this reason: applications adopting the library must still avoid pre-encryption compression, unpadded record sizes correlated to secrets, and metadata-bearing telemetry.
+
 \subsection{IndexedDB and Client-Side Storage}
 IndexedDB is the standard transactional object store available to web applications and service workers, and the only browser storage suitable for structured encrypted records of meaningful size.
 Data in IndexedDB is protected by the same-origin policy but is plaintext-at-rest from the application's perspective: any principal that can read the origin's storage (local malware, forensic imaging, a malicious extension with storage access) reads the stored bytes.
