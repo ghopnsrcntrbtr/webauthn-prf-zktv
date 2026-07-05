@@ -1,0 +1,98 @@
+\begin{thebibliography}{10}
+
+\bibitem{holestorage-prf}
+holestorage: client-side file encryption with the {WebAuthn} {PRF} extension.
+\newblock Open-source project, 2024.
+\newblock Available at \url{https://github.com/holestorage/webauthn-prf}.
+
+\bibitem{pq-cloud-survey}
+Yaser Baseri, Abdelhakim Hafid, and Arash~Habibi Lashkari.
+\newblock Future-proofing cloud security against quantum attacks: Risk,
+  transition, and mitigation strategies.
+\newblock arXiv:2509.15653, 2025.
+
+\bibitem{bitwarden-prf-blog}
+{Bitwarden}.
+\newblock {PRF} {WebAuthn} and its role in passkeys.
+\newblock Bitwarden Blog, 2024.
+
+\bibitem{injection-attacks}
+Andr\'{e}s F\'{a}brega, Armin Namavari, Rachit Agarwal, Ben Nassi, and Thomas
+  Ristenpart.
+\newblock Exploiting leakage in password managers via injection attacks.
+\newblock arXiv:2408.07054, 2024.
+
+\bibitem{rfc5869}
+Hugo Krawczyk and Pasi Eronen.
+\newblock {HMAC}-based extract-and-expand key derivation function ({HKDF}).
+\newblock RFC 5869, IETF, 2010.
+
+\bibitem{safekeeper}
+Klaudia Krawiecka, Arseny Kurnikov, Andrew Paverd, Mohammad Mannan, and
+  N.~Asokan.
+\newblock {SafeKeeper}: Protecting web passwords using trusted execution
+  environments.
+\newblock arXiv:1709.01261, 2017.
+
+\bibitem{horcrux}
+Hannah Li and David Evans.
+\newblock Horcrux: A password manager for paranoids.
+\newblock arXiv:1706.05085, 2017.
+
+\bibitem{simplewebauthn-prf}
+Matthew Miller.
+\newblock The {WebAuthn} {PRF} extension.
+\newblock SimpleWebAuthn documentation, 2024.
+
+\bibitem{nist-pqc}
+Dustin Moody et~al.
+\newblock Transition to post-quantum cryptography standards.
+\newblock NIST Internal Report 8547 (initial public draft), National Institute
+  of Standards and Technology, 2024.
+
+\bibitem{mfdpg}
+Vivek Nair and Dawn Song.
+\newblock {MFDPG}: Multi-factor authenticated password management with zero
+  stored secrets.
+\newblock arXiv:2306.14746, 2023.
+
+\bibitem{trustvault-security}
+Ian Pinto.
+\newblock {TrustVault-PWA}: security architecture and threat model
+  documentation.
+\newblock GitHub repository, 2026.
+\newblock Available at \url{https://github.com/opnsrcntrbtr/TrustVault-PWA}.
+
+\bibitem{zktv-lib}
+Ian Pinto.
+\newblock webauthn-prf-zktv: {WebAuthn} {PRF}-backed vault key wrapping with
+  zero-knowledge {IndexedDB} storage, v0.1.0.
+\newblock npm package and GitHub repository, 2026.
+\newblock Reference implementation for this paper; also published as
+  \texttt{webauthn-prf-zktv} on npm.
+
+\bibitem{mfkdf2}
+Colin Roberts, Vivek Nair, and Dawn Song.
+\newblock Wrangling entropy: Next-generation multi-factor key derivation,
+  credential hashing, and credential generation functions.
+\newblock arXiv:2509.05893, 2025.
+
+\bibitem{webauthn-spec}
+{W3C Web Authentication Working Group}.
+\newblock Web authentication: An {API} for accessing public key credentials,
+  level 3.
+\newblock W3C Working Draft, 2025.
+\newblock \S 10.1.4 defines the \texttt{prf} client extension.
+
+\bibitem{webauthn-prf-docs}
+{Yubico}.
+\newblock The {WebAuthn} {PRF} extension.
+\newblock Yubico Developers documentation, 2024.
+
+\bibitem{authstore}
+Clemens Zeidler and Muhammad~Rizwan Asghar.
+\newblock {AuthStore}: Password-based authentication and encrypted data storage
+  in untrusted environments.
+\newblock arXiv:1805.05033, 2018.
+
+\end{thebibliography}
