@@ -19,6 +19,14 @@ npm run build        # tsup → dist/
 npm publish --dry-run --access public   # inspect package size/contents before release
 ```
 
+Published on npm as `webauthn-prf-zktv` (since 0.1.0); `prepublishOnly` runs `verify`.
+
+## Paper (paper/)
+
+arXiv paper (LLNCS class), compiled with Tectonic: `tectonic paper/main.tex`.
+Citations live in `paper/references.bib`. Keep pseudo-code/listings in sync with
+`src/` — the paper claims to describe the actual implementation.
+
 ## Module map (sub-path exports)
 
 | Entry | Source | Runs in | Purpose |
