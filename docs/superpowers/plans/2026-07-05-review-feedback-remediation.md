@@ -605,6 +605,72 @@ git status --short   # expect clean or only graphify-out changes
 graphify update .
 ```
 
+### Task 8: App-Layer Side-Channel & Injection-Attack Mitigation Guidance
+
+**Files:**
+- Modify: `paper/main.tex`
+
+**Interfaces:** none — paper-only, no code, no new dependencies.
+
+**Why this task exists:** Reviewer lines 32/49 and 43+55 ask for *concrete, actionable* app-layer rules against non-cryptographic leakage (telemetry, caching, pre-encryption compression/dedup, IndexedDB record-size/timing correlation), not a passing mention. Two problems exist in the current text:
+1. `paper/main.tex` line 108 gives exactly one sentence of guidance ("must still avoid pre-encryption compression, unpadded record sizes correlated to secrets, and metadata-bearing telemetry") — not the structured guidance reviewers explicitly said "would materially strengthen the paper."
+2. The Evaluation's closing sentence (line 356, "\emph{Scope of the zero-knowledge claim}...") currently says "Sect.~\ref{sec:rationale} lists the corresponding app-layer rules" — **this cross-reference is wrong**. Sect.~\ref{sec:rationale} (Design Rationale, lines 211–226) only discusses the HKDF-salt and AEAD-AAD omissions; it contains no app-layer rules at all. Verified by re-reading the section in full on 2026-07-05.
+
+- [x] **Step 1: Add a new subsection with concrete app-layer rules**
+
+Insert after the Design Rationale subsection (after line 226, before `\section{IndexedDB Storage Architecture}`), with a new `\label{sec:applayer}`:
+
+```latex
+\subsection{Application-Layer Guidance Against Non-Cryptographic Leakage}
+\label{sec:applayer}
+The zero-knowledge argument of Sect.~\ref{sec:zk} covers only the persisted record and vault ciphertexts; it says nothing about surfaces above the storage layer.
+F\'{a}brega et al.~\cite{injection-attacks} show that E2EE password managers leak through exactly these surfaces under adversarial data injection.
+Applications adopting this library should additionally:
+\begin{itemize}
+  \item \textbf{Never compress or deduplicate before encryption.} Compression ratios and dedup hits both leak information about plaintext content and must happen, if at all, only after AES-GCM encryption (where they are ineffective against ciphertext, which is the point).
+  \item \textbf{Pad or bucket record sizes.} Ciphertext length is a direct function of plaintext length; secrets with a wide size distribution (e.g.\ free-text notes vs.\ fixed-width passwords) should be padded to fixed buckets before wrapping so stored record size does not correlate with secret content.
+  \item \textbf{Keep telemetry and analytics out of the unlock/wrap path.} No metrics, crash reports, or usage analytics should be scoped to \texttt{enrollVault}/\texttt{unlockVault} calls or fire conditionally on their success/failure in a way that leaks timing or outcome to a third party.
+  \item \textbf{Do not let vault content drive external fetches.} Icon, favicon, or metadata lookups (a known injection vector) must never be triggered by, or scoped to, individual vault entries.
+  \item \textbf{Treat IndexedDB write timing as an observable channel.} Batching or jittering writes avoids letting local instrumentation (a malicious extension, a compromised service worker) infer which record changed from write timing alone.
+\end{itemize}
+These are library-consumer obligations, not properties the library can enforce from inside \texttt{ZktvDb}, since padding and telemetry policy are application-specific.
+```
+
+- [x] **Step 2: Fix the broken cross-reference in the Evaluation section**
+
+Replace (currently around line 356):
+
+```latex
+\emph{Scope of the zero-knowledge claim}: the guarantee of Sect.~\ref{sec:zk} covers persisted state only; system-level channels demonstrated against E2EE password managers --- telemetry, caching, and pre-encryption compression or deduplication~\cite{injection-attacks} --- as well as record-size and timing patterns in IndexedDB remain application responsibilities (Sect.~\ref{sec:rationale} lists the corresponding app-layer rules).
+```
+
+with:
+
+```latex
+\emph{Scope of the zero-knowledge claim}: the guarantee of Sect.~\ref{sec:zk} covers persisted state only; system-level channels demonstrated against E2EE password managers --- telemetry, caching, and pre-encryption compression or deduplication~\cite{injection-attacks} --- as well as record-size and timing patterns in IndexedDB remain application responsibilities (Sect.~\ref{sec:applayer} lists the corresponding app-layer rules).
+```
+
+- [x] **Step 3: Compile and inspect** (done 2026-07-05: zero undefined refs/citations, zero overfulls; `\slash` added between the `enrollVault`/`unlockVault` texttt pair to fix a 35pt overfull)
+
+Run: `tectonic paper/main.tex`
+Expected: success; `\ref{sec:applayer}` resolves; no undefined citations (this section only cites the already-added `injection-attacks` key).
+
+- [x] **Step 4: Commit**
+
+```bash
+git add paper/main.tex
+git commit -m "docs(paper): add app-layer side-channel guidance section, fix rationale cross-reference
+
+Reviewer explicitly asked for concrete app-layer rules (compression/dedup,
+record padding, telemetry, icon fetching, write-timing), not a one-line
+mention. Also fixes Evaluation's dangling reference to sec:rationale, which
+never contained app-layer rules.
+
+Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>"
+```
+
+---
+
 ## Explicitly Rejected / Deferred Review Items
 
 - **Change HKDF salt to the PRF salt (v1):** rejected — breaks every published record; addressed as `prf-v2` reservation in Sect.~\ref{sec:rationale}.
@@ -612,3 +678,9 @@ graphify update .
 - **Implement devicePubKey:** deferred — WebAuthn L3 extension without dependable client support; discussed in the paper.
 - **Game-based formal proof, cross-device empirical benchmarks, red-teaming:** deferred — declared future work explicitly in the revised Evaluation text.
 - **Lower/adapt scrypt params downward for mobile:** rejected — violates the hard security floor; paper now says adaptation is upward-only and points constrained devices to the PRF path.
+
+## Deferred With Tracking (added 2026-07-05 gap-analysis revalidation)
+
+- **Empirical scrypt microbenchmarks across desktop/mobile/WebView (reviewer Q5, review lines 25 + 43-44):** deferred — `paper/main.tex`'s performance claim ("few hundred ms on desktop-class hardware, but can reach multi-second latency ... on low-end mobile devices and WebViews", line ~352) is derived from the $128 \cdot N \cdot r$ working-set formula, not measured. The future-work sentence (line 357) already names this gap but there is no measurement harness in the repo. Follow-up when picked up: add a `bench/scrypt.bench.ts` covering desktop Node plus at least one documented low-end Android/WebView baseline, before the performance claim is treated as empirically load-bearing in any future paper revision.
+- **Cross-platform PRF availability / ceremony-latency survey and adversarial red-teaming (review lines 24-26):** deferred — same future-work sentence (line 357) covers "ceremony latency, PRF availability" in general terms, but no browser/WebView version matrix or red-teaming plan is tracked anywhere. Follow-up: track as a standalone GitHub issue once the library has enough external adopters to make a cross-platform survey meaningful; no paper or code change needed until then.
+- **Crash-consistency / partial-write resilience test coverage (review lines 45 + 62, reviewer Q6):** deferred — the Evaluation's failure-semantics sentence (line 355, "a lost counter update leaves a stale (lower) stored counter ... can never render the vault un-unlockable") is a correct design argument, confirmed by inspection of `src/indexeddb/db.ts:65-107` (`saveWrappedVault` and `updateCounter` are independent IndexedDB transactions, so the claim holds), but no test simulates one write succeeding while the paired write is interrupted. Follow-up: add an integration test that calls `saveWrappedVault` then throws before `updateCounter` runs, and asserts the next `unlockVault` still succeeds with only a widened (not broken) acceptance window.

@@ -225,6 +225,20 @@ v1 compensates structurally: \texttt{parseRecord} enforces scheme-specific invar
 A context swap therefore fails before or at decryption, but the binding is enforced by the validation layer rather than the AEAD.
 \texttt{prf-v2} is reserved to bind $(\mathrm{version}, \mathrm{scheme}, \mathrm{salt}, \mathrm{vaultId})$ as AAD, converting this structural argument into a cryptographic one.
 
+\subsection{Application-Layer Guidance Against Non-Cryptographic Leakage}
+\label{sec:applayer}
+The zero-knowledge argument of Sect.~\ref{sec:zk} covers only the persisted record and vault ciphertexts; it says nothing about surfaces above the storage layer.
+F\'{a}brega et al.~\cite{injection-attacks} show that E2EE password managers leak through exactly these surfaces under adversarial data injection.
+Applications adopting this library should additionally:
+\begin{itemize}
+  \item \textbf{Never compress or deduplicate before encryption.} Compression ratios and dedup hits both leak information about plaintext content and must happen, if at all, only after AES-GCM encryption (where they are ineffective against ciphertext, which is the point).
+  \item \textbf{Pad or bucket record sizes.} Ciphertext length is a direct function of plaintext length; secrets with a wide size distribution (e.g.\ free-text notes vs.\ fixed-width passwords) should be padded to fixed buckets before wrapping so stored record size does not correlate with secret content.
+  \item \textbf{Keep telemetry and analytics out of the unlock/wrap path.} No metrics, crash reports, or usage analytics should be scoped to \texttt{enrollVault}\slash\texttt{unlockVault} calls or fire conditionally on their success/failure in a way that leaks timing or outcome to a third party.
+  \item \textbf{Do not let vault content drive external fetches.} Icon, favicon, or metadata lookups (a known injection vector) must never be triggered by, or scoped to, individual vault entries.
+  \item \textbf{Treat IndexedDB write timing as an observable channel.} Batching or jittering writes avoids letting local instrumentation (a malicious extension, a compromised service worker) infer which record changed from write timing alone.
+\end{itemize}
+These are library-consumer obligations, not properties the library can enforce from inside \texttt{ZktvDb}, since padding and telemetry policy are application-specific.
+
 \section{IndexedDB Storage Architecture}
 \label{sec:idb}
 \subsection{Schema Overview}
@@ -353,7 +367,7 @@ The password fallback is deliberately expensive: scrypt with $N{=}2^{17}{=}131{,
 These parameters are a security floor, not a tunable: the wrap KDF is precisely what an offline attacker attacks, so adaptive parameter selection is admissible only \emph{upward}; applications targeting constrained devices should prefer the PRF path, whose cost is independent of the KDF floor.
 \emph{Usability}: PRF-based unlock replaces master-password entry with a platform biometric gesture, but availability is uneven across browsers, platforms, and embedded WebViews; the tri-state capability detection and the \texttt{pw-v1} fallback exist precisely so that applications degrade gracefully rather than probe destructively.
 \emph{Failure semantics}: record and counter writes are single IndexedDB transactions, so a crash mid-operation leaves either the old or the new row, never a torn one; a lost counter update leaves a stale (lower) stored counter, which can only widen the acceptance window of the next unlock by one assertion --- it can never render the vault un-unlockable, so replay protection degrades toward availability rather than lockout.
-\emph{Scope of the zero-knowledge claim}: the guarantee of Sect.~\ref{sec:zk} covers persisted state only; system-level channels demonstrated against E2EE password managers --- telemetry, caching, and pre-encryption compression or deduplication~\cite{injection-attacks} --- as well as record-size and timing patterns in IndexedDB remain application responsibilities (Sect.~\ref{sec:rationale} lists the corresponding app-layer rules).
+\emph{Scope of the zero-knowledge claim}: the guarantee of Sect.~\ref{sec:zk} covers persisted state only; system-level channels demonstrated against E2EE password managers --- telemetry, caching, and pre-encryption compression or deduplication~\cite{injection-attacks} --- as well as record-size and timing patterns in IndexedDB remain application responsibilities (Sect.~\ref{sec:applayer} lists the corresponding app-layer rules).
 A quantitative cross-device benchmark of ceremony latency, PRF availability, and scrypt cost on constrained devices, together with a game-based formalization of the wrapping scheme, is left as future work; interoperability test vectors for both record schemes are published with the library to let independent implementations validate compatibility.
 
 \section{Conclusion}
