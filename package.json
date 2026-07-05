@@ -1,6 +1,6 @@
 {
   "name": "webauthn-prf-zktv",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Zero-Knowledge TrustVault: WebAuthn PRF-backed vault key wrapping (HKDF-SHA256 → AES-256-GCM) with optional PWA IndexedDB storage patterns.",
   "type": "module",
   "license": "MIT",
