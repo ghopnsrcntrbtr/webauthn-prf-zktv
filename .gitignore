@@ -3,6 +3,7 @@ dist/
 coverage/
 *.tsbuildinfo
 .remember/
+.DS_Store
 
 graphify-out/cost.json
 paper/main.aux
