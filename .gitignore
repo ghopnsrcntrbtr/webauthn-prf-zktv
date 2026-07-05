@@ -6,6 +6,7 @@ coverage/
 .DS_Store
 
 graphify-out/cost.json
+graphify-out/manifest.json
 paper/main.aux
 paper/main.bbl
 paper/main.blg
