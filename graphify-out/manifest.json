@@ -1,0 +1,152 @@
+{
+  "src/__tests__/errors.test.ts": {
+    "mtime": 1783161523.9293776,
+    "ast_hash": "79cb92a3d181011d0bf74711e6cd43c6",
+    "semantic_hash": "79cb92a3d181011d0bf74711e6cd43c6"
+  },
+  "src/core/__tests__/derive.test.ts": {
+    "mtime": 1783161523.929654,
+    "ast_hash": "bed6104e9992ec815357b2ee59adcf3f",
+    "semantic_hash": "bed6104e9992ec815357b2ee59adcf3f"
+  },
+  "src/core/__tests__/serialize.test.ts": {
+    "mtime": 1783161523.9297633,
+    "ast_hash": "ad22be4129835a4df411129bbb3f9a83",
+    "semantic_hash": "ad22be4129835a4df411129bbb3f9a83"
+  },
+  "src/core/__tests__/trustvault.test.ts": {
+    "mtime": 1783161523.929996,
+    "ast_hash": "33b5a368fdb076efbece9dd67546df59",
+    "semantic_hash": "33b5a368fdb076efbece9dd67546df59"
+  },
+  "src/core/__tests__/wrap.test.ts": {
+    "mtime": 1783161523.9300961,
+    "ast_hash": "e6f36df6101948b3a11303801bd0300b",
+    "semantic_hash": "e6f36df6101948b3a11303801bd0300b"
+  },
+  "src/core/derive.ts": {
+    "mtime": 1783161523.9302905,
+    "ast_hash": "06787d27f89225b08827ad1b77ed9674",
+    "semantic_hash": "06787d27f89225b08827ad1b77ed9674"
+  },
+  "src/core/serialize.ts": {
+    "mtime": 1783161523.9303901,
+    "ast_hash": "2fb769d77e1c93f4f9e6a2def8f48fd8",
+    "semantic_hash": "2fb769d77e1c93f4f9e6a2def8f48fd8"
+  },
+  "src/core/trustvault.ts": {
+    "mtime": 1783161523.930567,
+    "ast_hash": "b926fbbee7d317a0278eb7052b4da9d4",
+    "semantic_hash": "b926fbbee7d317a0278eb7052b4da9d4"
+  },
+  "src/core/types.ts": {
+    "mtime": 1783161523.9306502,
+    "ast_hash": "5231c8f46f81a63c85b0d7094436462a",
+    "semantic_hash": "5231c8f46f81a63c85b0d7094436462a"
+  },
+  "src/core/wrap.ts": {
+    "mtime": 1783161523.930743,
+    "ast_hash": "1e77b2f5bfcb000e1197ca5c140f6261",
+    "semantic_hash": "1e77b2f5bfcb000e1197ca5c140f6261"
+  },
+  "src/errors.ts": {
+    "mtime": 1783161523.9309607,
+    "ast_hash": "b1baa61724b3a5cf09872b18afe1081e",
+    "semantic_hash": "b1baa61724b3a5cf09872b18afe1081e"
+  },
+  "src/index.ts": {
+    "mtime": 1783161523.9310832,
+    "ast_hash": "20b5394ed8fe3018e28d3b407bbb0be1",
+    "semantic_hash": "20b5394ed8fe3018e28d3b407bbb0be1"
+  },
+  "src/indexeddb/__tests__/db.test.ts": {
+    "mtime": 1783161523.9312718,
+    "ast_hash": "c00273a474b1ae45913a6694dda7d0ee",
+    "semantic_hash": "c00273a474b1ae45913a6694dda7d0ee"
+  },
+  "src/indexeddb/db.ts": {
+    "mtime": 1783161523.93163,
+    "ast_hash": "3f58be4171ab4da758873b9f2b234513",
+    "semantic_hash": "3f58be4171ab4da758873b9f2b234513"
+  },
+  "src/indexeddb/index.ts": {
+    "mtime": 1783161523.9317837,
+    "ast_hash": "672745f7d7762aed614ed3e670856790",
+    "semantic_hash": "672745f7d7762aed614ed3e670856790"
+  },
+  "src/utils/__tests__/utils.test.ts": {
+    "mtime": 1783161523.931978,
+    "ast_hash": "19bdfb5486f4a90a76b1d86ee97cfb91",
+    "semantic_hash": "19bdfb5486f4a90a76b1d86ee97cfb91"
+  },
+  "src/utils/base64.ts": {
+    "mtime": 1783161523.9320867,
+    "ast_hash": "cbefcc63ea593bb64097615a5525aa27",
+    "semantic_hash": "cbefcc63ea593bb64097615a5525aa27"
+  },
+  "src/utils/random.ts": {
+    "mtime": 1783161523.932176,
+    "ast_hash": "1d854224597551e13260745253fb7f4c",
+    "semantic_hash": "1d854224597551e13260745253fb7f4c"
+  },
+  "src/utils/zeroize.ts": {
+    "mtime": 1783161523.932282,
+    "ast_hash": "67031fbadda5bdb9e944f2913fa8670e",
+    "semantic_hash": "67031fbadda5bdb9e944f2913fa8670e"
+  },
+  "src/webauthn/__tests__/enroll.test.ts": {
+    "mtime": 1783161523.9328043,
+    "ast_hash": "b822e4460a115cb48c5eff0da09cdf66",
+    "semantic_hash": "b822e4460a115cb48c5eff0da09cdf66"
+  },
+  "src/webauthn/__tests__/evaluatePrf.test.ts": {
+    "mtime": 1783161523.9330633,
+    "ast_hash": "2b6538ada888119425e5825421b02a67",
+    "semantic_hash": "2b6538ada888119425e5825421b02a67"
+  },
+  "src/webauthn/__tests__/support.test.ts": {
+    "mtime": 1783161523.9331946,
+    "ast_hash": "ef7a52327098dca2defa0a55a91dcdd7",
+    "semantic_hash": "ef7a52327098dca2defa0a55a91dcdd7"
+  },
+  "src/webauthn/__tests__/vault.test.ts": {
+    "mtime": 1783161523.9335034,
+    "ast_hash": "8e9574129631eb7acc5fdc7d7fc406db",
+    "semantic_hash": "8e9574129631eb7acc5fdc7d7fc406db"
+  },
+  "src/webauthn/__tests__/verify.test.ts": {
+    "mtime": 1783161523.9336479,
+    "ast_hash": "491a99dd1572ded4c260df355cbb2157",
+    "semantic_hash": "491a99dd1572ded4c260df355cbb2157"
+  },
+  "src/webauthn/ceremonies.ts": {
+    "mtime": 1783161523.9338267,
+    "ast_hash": "48c5837bb559e59fec3d9c5de53cfef3",
+    "semantic_hash": "48c5837bb559e59fec3d9c5de53cfef3"
+  },
+  "src/webauthn/index.ts": {
+    "mtime": 1783161523.9340215,
+    "ast_hash": "907c13aba88a14383c1a1e3d737c6c48",
+    "semantic_hash": "907c13aba88a14383c1a1e3d737c6c48"
+  },
+  "src/webauthn/prf-types.ts": {
+    "mtime": 1783161523.9341478,
+    "ast_hash": "f398d0a19f8826ed1893ae12c252193f",
+    "semantic_hash": "f398d0a19f8826ed1893ae12c252193f"
+  },
+  "src/webauthn/support.ts": {
+    "mtime": 1783161523.9342515,
+    "ast_hash": "49427204654c8c4ed565dbd29bfa0306",
+    "semantic_hash": "49427204654c8c4ed565dbd29bfa0306"
+  },
+  "src/webauthn/vault.ts": {
+    "mtime": 1783161523.9344819,
+    "ast_hash": "dabdb2816ff60fe289da7291019a5b63",
+    "semantic_hash": "dabdb2816ff60fe289da7291019a5b63"
+  },
+  "src/webauthn/verify.ts": {
+    "mtime": 1783161523.9346516,
+    "ast_hash": "dac4962fc289a9c31daa422204685112",
+    "semantic_hash": "dac4962fc289a9c31daa422204685112"
+  }
+}

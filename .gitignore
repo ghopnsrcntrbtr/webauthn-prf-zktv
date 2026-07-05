@@ -3,3 +3,5 @@ dist/
 coverage/
 *.tsbuildinfo
 .remember/
+
+graphify-out/cost.json
