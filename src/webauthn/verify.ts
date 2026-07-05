@@ -11,6 +11,31 @@ export function readCounter(authData: Uint8Array): number {
   );
 }
 
+/** Decoded WebAuthn authenticatorData flags byte (byte 32; WebAuthn L3 §6.1). */
+export interface AuthenticatorFlags {
+  userPresent: boolean;
+  userVerified: boolean;
+  /** BE: credential is eligible for multi-device sync (synced passkey). */
+  backupEligible: boolean;
+  /** BS: credential is currently backed up. When set, the signature counter is typically 0. */
+  backupState: boolean;
+}
+
+/**
+ * Advisory clone-detection signal: synced passkeys (BE/BS set) usually report
+ * counter 0, which disables the counter check in verifyAssertionResponse.
+ * Applications can surface these flags to inform risk decisions.
+ */
+export function readAuthenticatorFlags(authData: Uint8Array): AuthenticatorFlags {
+  const flags = authData[32] ?? 0;
+  return {
+    userPresent: (flags & 0x01) !== 0,
+    userVerified: (flags & 0x04) !== 0,
+    backupEligible: (flags & 0x08) !== 0,
+    backupState: (flags & 0x10) !== 0,
+  };
+}
+
 export interface VerifyAssertionArgs {
   clientDataJSON: Uint8Array;
   authenticatorData: Uint8Array;

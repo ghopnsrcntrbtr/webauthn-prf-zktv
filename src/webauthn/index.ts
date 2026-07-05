@@ -7,8 +7,8 @@ export type {
   EvaluatePrfOptions,
   PrfEvaluation,
 } from './ceremonies';
-export { readCounter, verifyAssertionResponse } from './verify';
-export type { VerifyAssertionArgs } from './verify';
+export { readAuthenticatorFlags, readCounter, verifyAssertionResponse } from './verify';
+export type { AuthenticatorFlags, VerifyAssertionArgs } from './verify';
 export { enrollVault, unlockVault } from './vault';
 export type {
   EnrollVaultOptions,

@@ -90,6 +90,16 @@ const { key, counter: newCounter } = await unlockVault({
 | `enrollPrfCredential(options)` | **Adaptive** enrollment: single ceremony when the authenticator evaluates PRF at create, two otherwise |
 | `evaluatePrf(options)` | Assertion ceremony → PRF output, with challenge/origin/counter replay verification |
 | `enrollVault(options)` / `unlockVault(options)` | One-call compositions: ceremony → HKDF → wrap/unwrap → zeroize |
+| `readAuthenticatorFlags(authenticatorData)` | Decode UP/UV/BE/BS bits (advisory clone-detection signal) |
+
+#### Cloned-credential signals and synced passkeys
+
+Synced passkeys commonly report a signature counter of 0, which disables the
+counter-increase replay check. `readAuthenticatorFlags(authenticatorData)`
+decodes the BE (backup-eligible) and BS (backup-state) flags so applications
+can distinguish device-bound credentials (where the counter check is
+meaningful) from synced passkeys (where it is not) and apply their own risk
+policy. This is an advisory signal — it does not change library behavior.
 
 ### `webauthn-prf-zktv/indexeddb` (browser)
 
@@ -112,6 +122,7 @@ vault key.
 
 - [SECURITY.md](./SECURITY.md) — threat model, guarantees, residuals
 - [MIGRATION.md](./MIGRATION.md) — TrustVault legacy migration, IndexedDB versioning
+- [docs/INTEROP-VECTORS.md](./docs/INTEROP-VECTORS.md) — known-answer vectors for independent implementations
 
 ## License
 

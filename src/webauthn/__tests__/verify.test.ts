@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { readCounter, verifyAssertionResponse } from '../verify';
+import { readAuthenticatorFlags, readCounter, verifyAssertionResponse } from '../verify';
 import { ReplayError } from '../../errors';
 
 function makeAuthData(counter: number): Uint8Array {
@@ -83,5 +83,36 @@ describe('verifyAssertionResponse', () => {
     expect(() =>
       verifyAssertionResponse({ ...valid, authenticatorData: new Uint8Array(10) }),
     ).toThrow(ReplayError);
+  });
+});
+
+describe('readAuthenticatorFlags', () => {
+  it('decodes UP, UV, BE, BS bits from authenticatorData byte 32', () => {
+    const authData = new Uint8Array(37);
+    authData[32] = 0x01 | 0x04 | 0x08 | 0x10;
+    expect(readAuthenticatorFlags(authData)).toEqual({
+      userPresent: true,
+      userVerified: true,
+      backupEligible: true,
+      backupState: true,
+    });
+  });
+
+  it('decodes a synced-passkey pattern (BE set, BS set, no UV)', () => {
+    const authData = new Uint8Array(37);
+    authData[32] = 0x01 | 0x08 | 0x10;
+    const flags = readAuthenticatorFlags(authData);
+    expect(flags.backupEligible).toBe(true);
+    expect(flags.backupState).toBe(true);
+    expect(flags.userVerified).toBe(false);
+  });
+
+  it('returns all-false for empty input', () => {
+    expect(readAuthenticatorFlags(new Uint8Array(0))).toEqual({
+      userPresent: false,
+      userVerified: false,
+      backupEligible: false,
+      backupState: false,
+    });
   });
 });
