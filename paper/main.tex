@@ -203,6 +203,23 @@ No other function of the PRF output or of $K_v$ is ever persisted (Sect.~\ref{se
 For \texttt{pw-v1} records the guarantee is necessarily weaker: the record is exactly as strong as the password under offline guessing, which is why the scrypt cost parameters stored in \texttt{kdfParams} are treated as a floor, not a tunable.
 The domain-separation label $\ell_{\mathrm{v1}}$ ensures that even if the same PRF output were ever used with another HKDF-based scheme, the derived keys would be independent.
 
+\subsection{Design Rationale: Deliberate Omissions and the Frozen v1 Format}
+\label{sec:rationale}
+Two natural hardening measures are deliberately absent from the v1 record format, and both omissions are governed by the same constraint: v1 is frozen, because any change to the key-derivation inputs or the ciphertext computation silently invalidates every record already persisted by deployed applications.
+
+\emph{HKDF salt.}
+RFC~5869~\cite{rfc5869} recommends a salt where one is available, and the PRF salt $s$ is a natural candidate for the HKDF salt field.
+v1 instead extracts with an empty salt and relies on $s$ for per-credential separation \emph{via the IKM}: distinct salts yield independent PRF outputs, so distinct credentials already derive independent wrap keys, and the versioned info label provides domain separation across schemes.
+The security loss is confined to extractor robustness against adversarially structured IKM --- a non-concern here, since the IKM is the output of a PRF evaluated inside the authenticator.
+A future \texttt{prf-v2} scheme will nevertheless move $s$ into the HKDF salt field to align with common practice, at the cost of a re-wrap migration.
+
+\emph{AEAD context binding.}
+v1 passes no additional authenticated data (AAD) to AES-GCM.
+GCM's authentication tag already rejects any modification of nonce or ciphertext; what AAD would add is \emph{context} binding --- preventing a valid record from being replayed in a different slot (e.g.\ swapping a \texttt{pw-v1} record into a \texttt{prf-v1} position, or moving a record between vaults).
+v1 compensates structurally: \texttt{parseRecord} enforces scheme-specific invariants (\texttt{kdfParams} present iff \texttt{pw-v1}), unwrapping asserts the record's scheme against the supplied key material before touching the cipher, and the IndexedDB composite key \texttt{[vaultId, scheme]} fixes each record's position.
+A context swap therefore fails before or at decryption, but the binding is enforced by the validation layer rather than the AEAD.
+\texttt{prf-v2} is reserved to bind $(\mathrm{version}, \mathrm{scheme}, \mathrm{salt}, \mathrm{vaultId})$ as AAD, converting this structural argument into a cryptographic one.
+
 \section{IndexedDB Storage Architecture}
 \label{sec:idb}
 \subsection{Schema Overview}
