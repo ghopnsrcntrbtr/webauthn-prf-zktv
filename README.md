@@ -9,7 +9,7 @@ only after user verification (biometric/PIN) and never persisted — or from a
 master password via memory-hard scrypt. Extracted from the production-proven
 [TrustVault-PWA](https://github.com/opnsrcntrbtr/TrustVault-PWA) security engine;
 this package is also the reference implementation for the accompanying research
-paper (arXiv link TBA on publication).
+paper [WebAuthn PRF-Based Vault Key Wrapping and Zero-Knowledge PWA Storage Architecture](https://doi.org/10.6084/m9.figshare.32915411)
 
 ```bash
 npm install webauthn-prf-zktv
